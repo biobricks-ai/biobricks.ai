@@ -1,0 +1,39 @@
+---
+title: "Bricks"
+weight: 101
+---
+
+```{r warning=F, message=F, echo=F}
+library(dplyr)
+library(purrr)
+brickdir <- fs::path_abs(here::here("content/bricks"))
+bricks   <- fs::dir_ls(brickdir) |> fs::path_file()
+readme   <- fs::dir_ls(brickdir,recurse=T,regexp="*Rmd") |> 
+  keep(~ (fs::path_dir(.) |> fs::path_file()) %in% bricks)
+
+yml <- readme |> map_dfr(\(path){
+  fm  <- rmarkdown::yaml_front_matter(path)
+  url <- fs::path_rel(path,"content") |> fs::path_dir()
+  list(namespace=fm$namespace,description=fm$description,url=url)
+}) |> filter(!is.na(namespace)) |> 
+  mutate(anchor = glue::glue('<a href="/bricks/{tolower(namespace)}/">{namespace}</a>')) |>
+  mutate(row = glue::glue("<tr><td>{anchor}</td><td>{description}</td></tr>"))
+
+rows <- paste0(yml$row,collapse="\n")
+
+htmltools::HTML(glue::glue('
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="80%">
+</colgroup>
+<thead><tr class="header">
+<th>Example</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+{rows}
+</tbody>
+</table>
+'))
+```

@@ -1,0 +1,8 @@
+public/
+
+# BLOGDOWN
+.hugo_build.lock
+/resources/
+.Rproj.user
+.Rhistory
+.Rdata

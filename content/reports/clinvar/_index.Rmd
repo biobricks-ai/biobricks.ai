@@ -1,0 +1,24 @@
+---
+title: "Clinvar and Chembl"
+description: "Using biobricks to combine public data"
+---
+
+This project:  
+
+  1. Makes a git repo with biobricks access
+  2. Builds the chembl and clinvar bricks
+  3. Shows a possible use case
+
+
+**Make the Repo**  
+Giving our analysis project biobricks capabilities is simple with [dvc](https://dvc.org/):
+```{bash eval=F}
+> mkdir my-analysis
+> git init
+> dvc init
+```
+
+**Pull chembl and clinvar**
+```{r}
+
+```

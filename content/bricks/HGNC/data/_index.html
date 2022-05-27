@@ -1,0 +1,97 @@
+---
+title: data
+namespace: data
+description: ''
+dependencies: []
+disableToc: true
+---
+
+
+
+<div id="description" class="section level2">
+<h2>Description</h2>
+<div id="data-overview" class="section level3">
+<h3>Data Overview</h3>
+<ul>
+<li>This directory contains data obtained from HGNC. The hgnc_complete_set is a set of all approved gene symbol reports found on the GRCh38 reference and the alternative reference loci (see fig. 2 for a list of columns/headings). Each complete set file is updated on a monthly basis and combined into a single parquet file in the brick, <code>data/combined_HGNC_data.parquet</code><br />
+</li>
+<li>The data is stored in parquet format. Descriptions for columns for each of the HGNC data tables are listed below.</li>
+<li>The data was obtained from the following link <a href="http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/" class="uri">http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/</a></li>
+</ul>
+</div>
+<div id="data-table-list" class="section level3">
+<h3>Data Table List</h3>
+<ul>
+<li><code>data/combined_HGNC_data.parquet</code></li>
+</ul>
+</div>
+<div id="column-descriptions" class="section level3">
+<h3>Column Descriptions</h3>
+<p><em>hgnc_id</em>: HGNC ID. A unique ID created by the HGNC for every approved symbol.</p>
+<p><em>symbol</em> :The HGNC approved gene symbol. Equates to the &quot;APPROVED SYMBOL&quot; field within the gene symbol report.</p>
+<p><em>name</em>: HGNC approved name for the gene. Equates to the &quot;APPROVED NAME&quot; field within the gene symbol report.</p>
+<p><em>locus_group:A</em> group name for a set of related locus types as defined by the HGNC (e.g. non-coding RNA).</p>
+<p><em>locus_type</em>: The locus type as defined by the HGNC (e.g. RNA, transfer).</p>
+<p><em>status</em>: Status of the symbol report, which can be either &quot;Approved&quot; or &quot;Entry Withdrawn&quot;.</p>
+<p><em>location</em> :Cytogenetic location of the gene (e.g. 2q34).</p>
+<p><em>location_sortable</em>: Same as &quot;location&quot; but single digit chromosomes are prefixed with a 0 enabling them to be sorted in correct numerical order (e.g. 02q34).</p>
+<p><em>alias_symbol</em>: Other symbols used to refer to this gene as seen in the &quot;SYNONYMS&quot; field in the symbol report.</p>
+<p><em>alias_name</em>: Other names used to refer to this gene as seen in the &quot;SYNONYMS&quot; field in the gene symbol report.</p>
+<p><em>prev_symbol</em>: Symbols previously approved by the HGNC for this gene. Equates to the &quot;PREVIOUS SYMBOLS &amp; NAMES&quot; field within the gene symbol report.</p>
+<p><em>prev_name</em>: Gene names previously approved by the HGNC for this gene. Equates to the &quot;PREVIOUS SYMBOLS &amp; NAMES&quot; field within the gene symbol report.</p>
+<p><em>gene_family</em>: Name given to a gene family or group the gene has been assigned to. Equates to the &quot;GENE FAMILY&quot; field within the gene symbol report.</p>
+<p><em>gene_family_id</em>: ID used to designate a gene family or group the gene has been assigned to.</p>
+<p><em>date_approved_reserved</em>: The date the entry was first approved.</p>
+<p><em>date_symbol_changed</em>: The date the gene symbol was last changed.</p>
+<p><em>date_name_changed</em>: The date the gene name was last changed.</p>
+<p><em>date_modified</em>:Date the entry was last modified.</p>
+<p><em>entrez_id</em>:Entrez gene ID. Found within the &quot;GENE RESOURCES&quot; section of the gene symbol report.</p>
+<p><em>ensembl_gene_id</em>: Ensembl gene ID. Found within the &quot;GENE RESOURCES&quot; section of the gene symbol report.</p>
+<p><em>vega_id</em>: Vega gene ID. Found within the &quot;GENE RESOURCES&quot; section of the gene symbol report.</p>
+<p><em>ucsc_id</em>: UCSC gene ID. Found within the &quot;GENE RESOURCES&quot; section of the gene symbol report.</p>
+<p><em>ena</em> : International Nucleotide Sequence Database Collaboration (GenBank, ENA and DDBJ) accession number(s). Found within the &quot;NUCLEOTIDE SEQUENCES&quot; section of the gene symbol report.</p>
+<p><em>refseq_accession</em>: RefSeq nucleotide accession(s). Found within the &quot;NUCLEOTIDE SEQUENCES&quot; section of the gene symbol report.</p>
+<p><em>ccds_id</em>: Consensus CDS ID. Found within the &quot;NUCLEOTIDE SEQUENCES&quot; section of the gene symbol report.</p>
+<p><em>uniprot_ids</em>: UniProt protein accession. Found within the &quot;PROTEIN RESOURCES&quot; section of the gene symbol report.</p>
+<p><em>pubmed_id</em>: Pubmed and Europe Pubmed Central PMID(s).</p>
+<p><em>mgd_id</em>: Mouse genome informatics database ID. Found within the &quot;HOMOLOGS&quot; section of the gene symbol report.</p>
+<p><em>rgd_id</em>: Rat genome database gene ID. Found within the &quot;HOMOLOGS&quot; section of the gene symbol report.</p>
+<p><em>lsdb</em>: The name of the Locus Specific Mutation Database and URL for the gene separated by a | character</p>
+<p><em>cosmic</em> :Symbol used within the Catalogue of somatic mutations in cancer for the gene.</p>
+<p><em>omim_id</em>: Online Mendelian Inheritance in Man (OMIM) ID</p>
+<p><em>mirbase</em>: miRBase ID</p>
+<p><em>homeodb</em>: Homeobox Database ID</p>
+<p><em>snornabase</em>: snoRNABase ID</p>
+<p><em>bioparadigms_slc</em>: Symbol used to link to the SLC tables database at bioparadigms.org for the gene</p>
+<p><em>orphanet</em>: Orphanet ID</p>
+<p><em>pseudogene.org</em>: Pseudogene.org</p>
+<p><em>horde_id</em>: Symbol used within HORDE for the gene</p>
+<p><em>merops</em> : ID used to link to the MEROPS peptidase database</p>
+<p><em>imgt</em>: Symbol used within international ImMunoGeneTics information system</p>
+<p><em>iuphar</em>: The objectId used to link to the IUPHAR/BPS Guide to PHARMACOLOGY database. To link to IUPHAR/BPS Guide to PHARMACOLOGY database only use the number (only use 1 from the result objectId:1)</p>
+<p><em>kznf_gene_catalog</em>: ID used to link to the Human KZNF Gene Catalog</p>
+<p><em>mamit-trnadb:</em> ID to link to the Mamit-tRNA database</p>
+<p><em>cd</em>: Symbol used within the Human Cell Differentiation Molecule database for the gene</p>
+<p><em>lncrnadb</em>:lncRNA Database ID</p>
+<p><em>enzyme_id</em>: ENZYME EC accession number</p>
+<p><em>intermediate_filament_db</em>: ID used to link to the Human Intermediate Filament Database</p>
+<p><em>agr</em>: The HGNC ID that the Alliance of Genome Resources (AGR) have linked to their record of the gene. Use the HGNC ID to link to the AGR.</p>
+<p><em>mane_select</em> : NCBI and Ensembl transcript IDs/acessions including the version number for one high-quality representative transcript per protein-coding gene that is well-supported by experimental data and represents the biology of the gene. The IDs are delimited by <code>|</code>.</p>
+</div>
+</div>
+<div id="data-retrieval" class="section level2">
+<h2>Data Retrieval</h2>
+<ul>
+<li>Data on the ftp website are updated on a weekly/monthly basis. <a href="http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/" class="uri">http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/</a></li>
+</ul>
+<div id="data-stored-in-parquet-files" class="section level3">
+<h3>Data stored in Parquet files</h3>
+<ul>
+<li>Data can be downloaded using the following commands. To retrieve the data, make sure that dvc is downloaded</li>
+</ul>
+<p><strong>Retrieving a single file</strong></p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/HGNC/data/combined_HGNC_data.parquet -o data/combined_HGNC_data.parquet</code></pre>
+<p><strong>It is advised to import files into a project so that you will be able to track changes in the data set</strong></p>
+<pre><code>dvc import git@github.com:insilica/oncindex-bricks.git bricks/HGNC/data/combined_HGNC_data.parquet -o data/combined_HGNC_data.parquet</code></pre>
+</div>
+</div>

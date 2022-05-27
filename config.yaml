@@ -1,0 +1,55 @@
+baseurl: /
+languageCode: en-us
+title: Managed bioinformatics pipelines
+theme: hugo-theme-biobricks
+googleAnalytics: ''
+disqusShortname: ''
+ignoreFiles:
+  - \.Rmd$
+  - \.Rmarkdown$
+  - _cache$
+  - \.knit\.md$
+  - \.utf8\.md$
+markup:
+  defaultMarkdownHandler: goldmark
+  goldmark:
+    renderer:
+      unsafe: yes
+  highlight:
+    anchorLineNos: false
+    codeFences: true
+    guessSyntax: false
+    hl_Lines: ""
+    lineAnchors: ""
+    lineNoStart: 1
+    lineNos: false
+    lineNumbersInTable: true
+    noClasses: true
+    noHl: false
+    style: monokai
+    tabWidth: 4
+params:
+  description: Import data into R and python
+  themeVariant: "mine"
+  showVisitedLinks: false
+  disableBreadcrumb: true
+  disableLandingPageButton: true
+  disableNextPrev: true
+  disableShortcutsTitle: true
+  disableSearch: true
+menu:
+  shortcuts:
+    - name: <i class='fab fa-github'></i> Github repo
+      identifier: ds
+      url: 'https://github.com/insilica/biobricks'
+      weight: 10
+    - name: <i class='fab fa-twitter'></i>@biobricks_ai
+      identifier: ds2
+      url: 'https://twitter.com/biobricks_ai'
+      weight: 11
+deployment:
+  targets:
+    - name: "biobricks.ai"
+      URL: "s3://biobricks.ai/?region=us-east-1"
+      cloudFrontDistributionID: "E2739YSAG8CXB8"
+home: ["HTML", "RSS", "JSON"] # used for site search

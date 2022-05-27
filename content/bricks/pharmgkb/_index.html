@@ -1,0 +1,35 @@
+---
+title: pharmgkb
+namespace: pharmgkb
+description: The Pharmacogenomics Knowledge Base
+dependencies:
+- name: pharmgkb
+  url: https://www.pharmgkb.org/downloads
+---
+
+
+
+<div id="description" class="section level1">
+<h1>Description</h1>
+<p>This directory contains data that was obtained from <a href="https://www.pharmgkb.org/downloads">PharmGKB</a> - The Pharmacogenomics Knowledge Base</p>
+<p>Most of the datasets consist of tsv files that have been converted to parquet Each subdir contains parquet file(s) with a README.pdf describing each dataset. filenames were preserved, but extensions were changed from .tsv to .parquet</p>
+<p>One exception is the dir contains <code>pathways-tsv</code> which is a combination of many tsv files. An additional <code>filename</code> column has been attached describing which file from the original <code>pathways-tsv.zip</code> it was obtained from.</p>
+<p>There are two more exceptions in this collection: <code>guidelineAnnotations.json.zip</code> contains raw json and <code>pathways-biopax.zip</code> contains Web Ontology Language (OWL) XML. These were not converted to parquet files</p>
+</div>
+<div id="data-retrieval" class="section level1">
+<h1>Data Retrieval</h1>
+<p>You will need dvc installed in order to retrieve the data.</p>
+<p>To download an individual file, use the command</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/pharmgkb/data/drugLabels/drugLabels.parquet -o data/drugLabels/drugLabels.parquet</code></pre>
+<p>to download the drugLabels project files</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/pharmgkb/data/drugLabels -o data/drugLabels</code></pre>
+<p>download the collated patient data</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/pharmgkb/data/combined_clinical_drug.parquet -o data/</code></pre>
+<p>To view the data description for a dataset, retrieve the corresponding README.pdf</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/pharmgkb/data/drugLabels/README.pdf -o data/drugLabels/README.pdf</code></pre>
+<div id="it-is-advised-to-import-the-files-into-a-project-so-that-you-will-able-to-track-changes-in-the-dataset" class="section level3">
+<h3>It is advised to import the files into a project so that you will able to track changes in the dataset</h3>
+<pre><code>dvc import git@github.com:insilica/oncindex-bricks.git bricks/pharmgkb/data/drugLabels -o data/drugLabels</code></pre>
+<p>Then follow the instructions to save the data into your local dvc repo</p>
+</div>
+</div>

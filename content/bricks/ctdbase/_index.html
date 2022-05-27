@@ -1,0 +1,301 @@
+---
+title: ctdbase
+namespace: ctdbase
+description: ctdbase aggregates data about how environmental exposures impact human
+  health
+dependencies:
+- name: ctdbase downloads
+  url: http://ctdbase.org/downloads
+---
+
+
+
+<div id="comparative-toxicogenomics-database-ctdbase.org" class="section level1">
+<h1>Comparative Toxicogenomics Database <a href="http://ctdbase.org/downloads">ctdbase.org</a></h1>
+<blockquote>
+<p>CTD is a robust, publicly available database that aims to advance understanding about how environmental exposures affect human health - <a href="http://ctdbase.org/" class="uri">http://ctdbase.org/</a></p>
+</blockquote>
+<p>Biobricks.ai transforms ctdbase into parquet and <a href="https://owlcollab.github.io/oboformat/doc/GO.format.obo-1_4.html">OBO</a> files. To use an individual file, install dvc and import or install the file:</p>
+<pre><code># TODO major - we need to give people a way to download the data themselves, this won&#39;t work.
+dvc get    git@github.com:insilica/oncindex-bricks.git bricks/ctdbase/data/CTD_Phenotype-Disease_biological_process_associations.parquet
+dvc import git@github.com:insilica/oncindex-bricks.git bricks/ctdbase/data/CTD_Phenotype-Disease_biological_process_associations.parquet</code></pre>
+</div>
+<div id="data-description" class="section level1">
+<h1>Data description</h1>
+<div id="chemicalgene-interactions" class="section level3">
+<h3>Chemical–gene interactions</h3>
+<p><code>CTD_chem_gene_ixns.parquet</code></p>
+<p>Fields: - ChemicalName - ChemicalID (MeSH identifier) - CasRN (CAS Registry Number, if available) - GeneSymbol - GeneID (NCBI Gene identifier) - GeneForms ('|'-delimited list) - Organism (scientific name) - OrganismID (NCBI Taxonomy identifier) - Interaction - InteractionActions ('|'-delimited list) - PubMedIDs ('|'-delimited list)</p>
+</div>
+<div id="chemicalgene-interaction-types" class="section level3">
+<h3>Chemical–gene interaction types</h3>
+<p><code>CTD_chem_gene_ixn_types.parquet</code></p>
+<p>Fields (non-OBO):</p>
+<ul>
+<li>TypeName</li>
+<li>Code</li>
+<li>Description</li>
+</ul>
+<p>ParentCode</p>
+<p><code>CTD_chem_gene_ixn_types.obo</code> OBO-edit format</p>
+</div>
+<div id="chemicaldisease-associations" class="section level3">
+<h3>Chemical–disease associations</h3>
+<p><code>CTD_chemicals_diseases.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>ChemicalName</li>
+<li>ChemicalID (MeSH identifier)</li>
+<li>CasRN (CAS Registry Number, if available)</li>
+<li>DiseaseName</li>
+<li>DiseaseID (MeSH or OMIM identifier)</li>
+<li>DirectEvidence ('|'-delimited list)</li>
+<li>InferenceGeneSymbol</li>
+<li>InferenceScore</li>
+<li>OmimIDs ('|'-delimited list)</li>
+<li>PubMedIDs ('|'-delimited list)</li>
+</ul>
+</div>
+<div id="chemicalgo-enriched-associations" class="section level3">
+<h3>Chemical–GO enriched associations</h3>
+<p><code>CTD_chem_go_enriched.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>ChemicalName</li>
+<li>ChemicalID (MeSH identifier)</li>
+<li>CasRN (CAS Registry Number, if available)</li>
+<li>Ontology</li>
+<li>GOTermName</li>
+<li>GOTermID</li>
+<li>HighestGOLevel</li>
+<li>PValue</li>
+<li>CorrectedPValue</li>
+<li>TargetMatchQty</li>
+<li>TargetTotalQty</li>
+<li>BackgroundMatchQty</li>
+<li>BackgroundTotalQty</li>
+</ul>
+</div>
+<div id="chemicalpathway-enriched-associations" class="section level3">
+<h3>Chemical–pathway enriched associations</h3>
+<p><code>CTD_chem_pathways_enriched.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>ChemicalName</li>
+<li>ChemicalID (MeSH identifier)</li>
+<li>CasRN (CAS Registry Number, if available)</li>
+<li>PathwayName</li>
+<li>PathwayID (KEGG or REACTOME identifier)</li>
+<li>PValue</li>
+<li>CorrectedPValue</li>
+<li>TargetMatchQty</li>
+<li>TargetTotalQty</li>
+<li>BackgroundMatchQty</li>
+<li>BackgroundTotalQty</li>
+</ul>
+</div>
+<div id="genedisease-associations" class="section level3">
+<h3>Gene–disease associations</h3>
+<p><code>CTD_genes_diseases.parquet</code></p>
+<p><em>Large file size: 2.4GB</em></p>
+<p>Fields:</p>
+<ul>
+<li>GeneSymbol</li>
+<li>GeneID (NCBI Gene identifier)</li>
+<li>DiseaseName</li>
+<li>DiseaseID (MeSH or OMIM identifier)</li>
+<li>DirectEvidence ('|'-delimited list)</li>
+<li>InferenceChemicalName</li>
+<li>InferenceScore</li>
+<li>OmimIDs ('|'-delimited list)</li>
+<li>PubMedIDs ('|'-delimited list)</li>
+</ul>
+</div>
+<div id="genepathway-associations" class="section level3">
+<h3>Gene–pathway associations</h3>
+<p><code>CTD_genes_pathways.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>GeneSymbol</li>
+<li>GeneID (NCBI Gene identifier)</li>
+<li>PathwayName</li>
+<li>PathwayID (KEGG or REACTOME identifier)</li>
+</ul>
+</div>
+<div id="diseasepathway-associations" class="section level3">
+<h3>Disease–pathway associations</h3>
+<p><code>CTD_diseases_pathways.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>DiseaseName</li>
+<li>DiseaseID (MeSH or OMIM identifier)</li>
+<li>PathwayName</li>
+<li>PathwayID (KEGG or REACTOME identifier)</li>
+<li>InferenceGeneSymbol (a gene via which the association is inferred)</li>
+</ul>
+</div>
+<div id="chemicalphenotype-interactions" class="section level3">
+<h3>Chemical–phenotype interactions</h3>
+<p><code>CTD_pheno_term_ixns.parquet</code></p>
+<p>Fields: - ChemicalName - ChemicalID (MeSH identifier) - CASRN (CAS Registry Number, if available) - PhenotypeName - PhenotypeID (GO identifier) - CoMentionedTerms ('|'-delimited list ) entries formatted as Name<sup>Id</sup>Source - Organism (scientific name) - OrganismID (NCBI Taxonomy identifier) - Interaction - InteractionActions ('|'-delimited list) - AnatomyTerms (MeSH term; '|'-delimited list) entries formatted as SequenceOrder<sup>Name</sup>Id - InferenceGeneSymbols ('|'-delimited list) entries formatted as Name^Id - PubMedIDs ('|'-delimited list)</p>
+</div>
+<div id="exposurestudy-associations" class="section level3">
+<h3>Exposure–study associations</h3>
+<p><code>CTD_exposure_studies.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>Reference</li>
+<li>StudyFactors ( | delimited list)</li>
+<li>ExposureStressors ( | delimited list ) entries formatted as Name<sup>Id</sup>Source</li>
+<li>Receptors ( | delimited list) formatted as Name<sup>Id</sup>Source^description</li>
+<li>StudyCountries (| delimited list)</li>
+<li>Mediums (| delimited list)</li>
+<li>ExposureMarkers ( | delimited list) entries formatted as Name<sup>Id</sup>Source</li>
+<li>Diseases ( | delimited list) entries formatted as Name<sup>Id</sup>Source</li>
+<li>Phenotypes ( | delimited list) entries formatted as Name<sup>Id</sup>Source</li>
+<li>AuthorSummary</li>
+</ul>
+</div>
+<div id="exposureevent-associations" class="section level3">
+<h3>Exposure–event associations</h3>
+<p><code>CTD_exposure_events.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>ExposureStressorName</li>
+<li>ExposureStressorID (MeSH identifier)</li>
+<li>StressorSourceCategory ('|'-delimited list)</li>
+<li>StressorSourceDetails</li>
+<li>NumberOfStressorSamples</li>
+<li>StressorNotes</li>
+<li>NumberOfReceptors</li>
+<li>Receptors</li>
+<li>ReceptorNotes</li>
+<li>SmokingStatus ('|'-delimited list)</li>
+<li>Age</li>
+<li>AgeUnitsOfMeasurement</li>
+<li>AgeQualifier</li>
+<li>Sex('|'-delimited list)</li>
+<li>Race ('|'-delimited list)</li>
+<li>Methods ('|'-delimited list)</li>
+<li>DetectionLimit</li>
+<li>DetectionLimitUnitsOfMeasurement</li>
+<li>DetectionFrequency</li>
+<li>Medium</li>
+<li>ExposureMarker</li>
+<li>ExposureMarkerID (MeSH or NCBI Gene identifier)</li>
+<li>MarkerLevel</li>
+<li>MarkerUnitsOfMeasurement</li>
+<li>MarkerMeasurementStatistic</li>
+<li>AssayNotes</li>
+<li>StudyCountries ('|'-delimited list)</li>
+<li>StateOrProvince ('|'-delimited list)</li>
+<li>City,Town,Region,Area ('|'-delimited list)</li>
+<li>ExposureEventNotes</li>
+<li>OutcomeRelationship</li>
+<li>DiseaseName</li>
+<li>DiseaseID (MeSH or OMIM identifier)</li>
+<li>PhenotypeName</li>
+<li>PhenotypeID (GO identifier)</li>
+<li>PhenotypeActionDegreeType</li>
+<li>Anatomy (MeSH term; '|'-delimited list)</li>
+<li>ExposureOutcomeNotes</li>
+<li>Reference</li>
+<li>AssociatedStudyTitles ('|'-delimited list)</li>
+<li>EnrollmentStartYear</li>
+<li>EnrollmentEndYear</li>
+<li>StudyFactors ('|'-delimited list)</li>
+</ul>
+</div>
+<div id="phenotype-godisease-inference-networks" class="section level3">
+<h3>Phenotype (GO)–Disease Inference Networks</h3>
+<p><code>CTD_Phenotype-Disease_biological_process_associations.parquet</code> <code>CTD_Phenotype-Disease_cellular_component_associations.parquet</code> <code>CTD_Phenotype-Disease_molecular_function_associations.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>GOName</li>
+<li>GOID (GO identifer)</li>
+<li>DiseaseName</li>
+<li>DiseaseID (MeSH or OMIM identifier)</li>
+<li>InferenceChemicalQty</li>
+<li>InferenceChemicalNames ('|' delimited list)</li>
+<li>InferenceGeneQty</li>
+<li>InferenceGeneSymbols ('|' delimited list)</li>
+</ul>
+</div>
+<div id="chemical-vocabulary" class="section level3">
+<h3>Chemical vocabulary</h3>
+<p><code>CTD_chemicals.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>ChemicalName</li>
+<li>ChemicalID (MeSH identifier)</li>
+<li>CasRN (CAS Registry Number, if available)</li>
+<li>Definition</li>
+<li>ParentIDs (identifiers of the parent terms; '|'-delimited list)</li>
+<li>TreeNumbers (identifiers of the chemical's nodes; '|'-delimited list)</li>
+<li>ParentTreeNumbers (identifiers of the parent nodes; '|'-delimited list)</li>
+<li>Synonyms ('|'-delimited list)</li>
+</ul>
+</div>
+<div id="disease-vocabulary-medic" class="section level3">
+<h3>Disease vocabulary (MEDIC)</h3>
+<p><code>CTD_diseases.parquet</code></p>
+<p>Fields (non-OBO):</p>
+<ul>
+<li>DiseaseName</li>
+<li>DiseaseID (MeSH or OMIM identifier)</li>
+<li>Definition</li>
+<li>AltDiseaseIDs (alternative identifiers; '|'-delimited list)</li>
+<li>ParentIDs (identifiers of the parent terms; '|'-delimited list)</li>
+<li>TreeNumbers (identifiers of the disease's nodes; '|'-delimited list)</li>
+<li>ParentTreeNumbers (identifiers of the parent nodes; '|'-delimited list)</li>
+<li>Synonyms ('|'-delimited list)</li>
+<li>SlimMappings (MEDIC-Slim mappings; '|'-delimited list)</li>
+</ul>
+<p>CTD's MEDIC disease vocabulary is a modified subset of descriptors from the “Diseases” [C] branch of the U.S. National Library of Medicine's Medical Subject Headings (<a href="http://www.nlm.nih.gov/mesh/meshhome.html">MeSH</a>®), combined with genetic disorders from the Online Mendelian Inheritance in Man® (<a href="http://www.omim.org/">OMIM</a>®) database. Each disease occurs in one or more nodes of this hierarchical vocabulary.</p>
+<p>MEDIC-Slim classifies MEDIC diseases into high-level categories.</p>
+</div>
+<div id="anatomy-vocabulary" class="section level3">
+<h3>Anatomy vocabulary</h3>
+<p><code>CTD_anatomy.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>AnatomyName</li>
+<li>AnatomyID (MeSH identifier)</li>
+<li>Definition</li>
+<li>AltAnatomyIDs (alternative identifiers; '|'-delimited list)</li>
+<li>ParentIDs (identifiers of the parent terms; '|'-delimited list)</li>
+<li>TreeNumbers (identifiers of the anatomical term's nodes; '|'-delimited list)</li>
+<li>ParentTreeNumbers (identifiers of the parent nodes; '|'-delimited list)</li>
+<li>Synonyms ('|'-delimited list)</li>
+<li>ExternalSynonyms ('|'-delimited list)</li>
+</ul>
+</div>
+<div id="gene-vocabulary" class="section level3">
+<h3>Gene vocabulary</h3>
+<p><code>CTD_genes.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>GeneSymbol</li>
+<li>GeneName</li>
+<li>GeneID (NCBI Gene identifier)</li>
+<li>AltGeneIDs (alternative NCBI Gene identifiers; '|'-delimited list)</li>
+<li>Synonyms ('|'-delimited list)</li>
+<li>BioGRIDIDs ('|'-delimited list)</li>
+<li>PharmGKBIDs ('|'-delimited list)</li>
+<li>UniprotIDs ('|'-delimited list)</li>
+</ul>
+</div>
+<div id="pathway-vocabulary" class="section level3">
+<h3>Pathway vocabulary</h3>
+<p><code>CTD_pathways.parquet</code></p>
+<p>Fields:</p>
+<ul>
+<li>PathwayName</li>
+<li>PathwayID (KEGG or REACTOME identifier)</li>
+</ul>
+</div>
+<div id="exposure-ontology-exo" class="section level3">
+<h3>Exposure Ontology (ExO)</h3>
+<p><code>CTD_exposure_ontology.obo</code></p>
+</div>
+</div>

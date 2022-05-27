@@ -1,0 +1,37 @@
+---
+title: GDC
+namespace: GDC
+description: The GDC contains molecular & clinical human cancer data
+dependencies:
+- name: GDC
+  url: https://portal.gdc.cancer.gov/
+---
+
+
+
+<p>This directory contains data that was obtained from the Genetic Data Commons</p>
+<p>It contains projects from the The Cancer Genome Atlas (TCGA) program</p>
+<p>The data is stored in parquet files and has clinical_patient, clinical_drug and MuTect2 aliquot sample MAF files describing genetic mutations Each individual project has all patient data in its respective subdir eg.</p>
+<pre><code>data/TCGA-PRAD/clinical_drug_prad.parquet
+data/TCGA-PRAD/clinical_patient_prad.parquet
+data/TCGA-PRAD/wxs.aliquot_ensemble_masked.maf.parquet</code></pre>
+<p>In addition, all of the projects data are collated into the files (sans TCGA-PAAD and TCGA-SKCM MAF files due to processing errors).</p>
+<pre><code>data/combined_clinical_drug.parquet
+data/combined_clinical_patient.parquet
+data/combined.wxs.aliquot_ensemble_masked.maf.parquet</code></pre>
+<p>It should be noted that each project produced data that can have different formats, so column names will vary between projects</p>
+<div id="data-retrieval" class="section level1">
+<h1>Data Retrieval</h1>
+<p>You will need dvc installed in order to retrieve the data.</p>
+<p>To download an individual file, use the command</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/gdc/data/TCGA-PRAD/clinical_drug_prad.parquet -o data/TCGA-PRAD/clinical_drug_prad.parquet</code></pre>
+<p>to download the TCGA-PRAD project files</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/gdc/data/TCGA-PRAD -o data/TCGA-PRAD</code></pre>
+<p>download the collated patient data</p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/gdc/data/combined_clinical_drug.parquet -o data/</code></pre>
+<div id="it-is-advised-to-import-the-files-into-a-project-so-that-you-will-able-to-track-changes-in-the-dataset" class="section level3">
+<h3>It is advised to import the files into a project so that you will able to track changes in the dataset</h3>
+<pre><code>dvc import git@github.com:insilica/oncindex-bricks.git bricks/gdc/data/TCGA-PRAD -o data/TCGA-PRAD</code></pre>
+<p>Then follow the instructions to save the data into your local dvc repo</p>
+</div>
+</div>

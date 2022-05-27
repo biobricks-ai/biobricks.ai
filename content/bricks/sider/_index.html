@@ -1,0 +1,60 @@
+---
+title: sider
+namespace: sider
+description: marketed medicines and recorded adverse drug reactions.
+dependencies:
+- name: SIDER
+  url: http://sideeffects.embl.de
+---
+
+
+
+<blockquote>
+<p>SIDER contains information on marketed medicines and their recorded adverse drug reactions. The information is extracted from public documents and package inserts. The available information include side effect frequency, drug and side effect classifications as well as links to further information, for example drug–target relations.</p>
+</blockquote>
+<p>Biobricks.ai transforms SIDER into parquet files.</p>
+<div id="data-overview" class="section level1">
+<h1>Data overview</h1>
+<ul>
+<li>This directory contains data obtained from SIDER. SIDER is a resource that contains information on drugs and their recorded adverse drug effects.</li>
+<li>The data is stored in parquet format. Descriptions for each column of each file in SIDER can be found below.</li>
+<li>The data was downloaded from: <a href="http://sideeffects.embl.de/download/" class="uri">http://sideeffects.embl.de/download/</a></li>
+</ul>
+</div>
+<div id="data-table-list" class="section level1">
+<h1>Data Table List</h1>
+<ul>
+<li><code>drug_atc.parquet</code></li>
+<li><code>drug_names.parquet</code></li>
+<li><code>meddra_all_indications.parquet</code></li>
+<li><code>meddra_all_label_indications.parquet</code></li>
+<li><code>meddra_all_label_se.parquet</code></li>
+<li><code>meddra_all_se.parquet</code></li>
+<li><code>meddra_freq.parquet</code></li>
+<li><code>meddra.parquet</code></li>
+</ul>
+</div>
+<div id="description-of-files" class="section level1">
+<h1>Description of Files</h1>
+<div id="data-files-with-drug-names-and-id-numbers" class="section level3">
+<h3>Data files with drug names and ID numbers</h3>
+<p><code>drug_atc.parquet</code> - STITCH_Compound_ID. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID. - ATC. This column contains the ATC (Anatomical Therapeutic Chemical code). Each drug is assigned a unique ATC code. This system is maintained by the <a href="https://www.whocc.no/">World Health Organization</a>.</p>
+<p><code>drug_names.parquet</code> - STITCH_Compound_ID. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID. - Drug_Name. This column contains the actual name of the drug as retrieved by SIDER.</p>
+</div>
+<div id="data-files-with-side-effect-information" class="section level3">
+<h3>Data files with side effect information</h3>
+<p><code>meddra_all_indications.parquet</code> - STITCH_Compound ID_flat. This column contains the flat <a href="http://stitch.embl.de/">STITCH</a> Compound ID. - UMLS_CUI. This column contains the Unified Medical Language System (UMLS) Concept Unique Indentifier (CUI) number as it was found on the drug label. Each CUI in the UMLS corresponds to a specific medical <a href="https://www.nlm.nih.gov/research/umls/new_users/online_learning/Meta_005.html">concept</a>. - Detection_Method. This column contains the method of detection. This is the method by which SIDER determined side effect information. - UMLS_CUI_Concept_Name. Concept name corresponding to the UMLS CUI. - MedDra_Concept_Type. This column contains the MedDRA concept type (LLT = lowest level term, PT = preferred term; in a few cases the term is neither LLT nor PT) - UMLS_CUI_for_MedDRA_Term. This column contains the Unified Medical Language System (UMLS) Concept Unique Indentifier (CUI) for the MedDRA term. - MedDRA_Concept_Name. This column contains the MedDRA concept name.</p>
+<p><code>meddra_all_label_indications.parquet</code> - Source_Label. This column contains the source label used to construct the entry. - STITCH_Compound_ID_flat. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (flat) - STITCH_Compound_ID_stereo. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (stereo) - UMLS_CUI. This column contains the <a href="https://www.nlm.nih.gov/research/umls/new_users/online_learning/Meta_005.html">UMLS CUI</a>. - Detection_Method. This column contains the mthod of detection. This is the method by which SIDER determined side effect information. - UMLS_CUI_Concept_Name. This column contains the concept name corresponding to the UMLS CUI. - MedDra_Concept_Type. This column contains the MedDRA concept type (LLT = lowest level term, PT = preferred term; in a few cases the term is neither LLT nor PT) - UMLS_CUI_for_MedDRA_Term. This column contains the UMLS concept ID for MedDRA term - MedDRA_Concept_Name. This column contains the MedDRA concept name.</p>
+<p><code>meddra_all_label_se.parquet</code> - Source_Label. This column contains the source label used to construct the entry. - STITCH_Compound_ID_flat. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (flat) - STITCH_Compound_ID_stereo. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (stereo) - UMLS_CUI. This column contains the <a href="https://www.nlm.nih.gov/research/umls/new_users/online_learning/Meta_005.html">UMLS CUI</a>. - MedDra_Concept_Type. This column contains the MedDRA concept type (LLT = lowest level term, PT = preferred term; in a few cases the term is neither LLT nor PT) - UMLS_CUI_for_MedDRA_Term. This column contains the UMLS concept ID for MedDRA term - MedDRA_Concept_Name. This column contains the MedDRA concept name.</p>
+<p><code>meddra_all_se.parquet</code> - STITCH_Compound_ID_flat. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (flat) - STITCH_Compound_ID_stereo. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (stereo) - UMLS_CUI. This column contains the <a href="https://www.nlm.nih.gov/research/umls/new_users/online_learning/Meta_005.html">UMLS CUI</a>. - MedDra_Concept_Type. This column contains the MedDRA concept type (LLT = lowest level term, PT = preferred term; in a few cases the term is neither LLT nor PT) - UMLS_CUI_for_MedDRA_Term. This column contains the UMLS concept ID for MedDRA term - MedDRA_Concept_Name. This column contains the MedDRA concept name.</p>
+<p><code>meddra_freq.parquet</code> - STITCH_Compound_ID_flat. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (flat) - STITCH_Compound_ID_stereo. This column contains the <a href="http://stitch.embl.de/">STITCH</a> Compound ID (stereo) - UMLS_CUI. This column contains the <a href="https://www.nlm.nih.gov/research/umls/new_users/online_learning/Meta_005.html">UMLS CUI</a>. - placebo. This column contains &quot;placebo&quot; if the info comes from placebo administration, &quot;&quot; otherwise - frquency_description. A description of the frequency. For example &quot;postmarketing&quot;, &quot;rare&quot;, &quot;infrequent&quot;, &quot;frequent&quot;, &quot;common&quot;, or an exact percentage - frequency_lower_bound. This column contains the lower bound of the frequency - frequency_upper_bound. This column contains the upper bound of the frequency - MedDra_Concept_Type. This column contains the MedDRA concept type (LLT = lowest level term, PT = preferred term; in a few cases the term is neither LLT nor PT) - UMLS_CUI_for_MedDRA_Term. This column contains the UMLS concept ID for MedDRA term - MedDRA_Concept_Name. This column contains the MedDRA concept name.</p>
+<p><code>meddra.parquet</code> - UMLS_CUI. This column contains the <a href="https://www.nlm.nih.gov/research/umls/new_users/online_learning/Meta_005.html">UMLS CUI</a>. - kind_of_term. This column contains the kind of term (from MedDRA e.g. PT = preferred term) - MedDra_ID. This column contains the MedDRA ID for the medical terminology - Side_Effect. This column contains the name of the side effect.</p>
+</div>
+</div>
+<div id="data-can-be-downloaded-using-the-following-commands.-to-retrieve-the-data-make-sure-that-dvc-is-downloaded" class="section level1">
+<h1>Data can be downloaded using the following commands. To retrieve the data, make sure that dvc is downloaded</h1>
+<p><strong>Retrieving a single file</strong></p>
+<pre><code>dvc get git@github.com:insilica/oncindex-bricks.git bricks/sider/data/drug_atc.parquet -o data/drug_atc.parquet</code></pre>
+<p><strong>It is advised to import files into a project so that you will be able to track changes in the data set</strong></p>
+<pre><code>dvc import git@github.com:insilica/oncindex-bricks.git bricks/sider/data/ -o data</code></pre>
+</div>

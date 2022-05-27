@@ -1,0 +1,26 @@
+---
+title: Reports
+weight: 102
+---
+
+```{r warning=F, message=F, echo=F}
+library(purrr)
+library(fs)
+library(glue)
+library(rmarkdown)
+
+wd  <- here::here("content/reports")
+rep <- dir_ls(wd) |> keep(is_dir)
+fm  <- dir_ls(rep,regexp="index.Rmd$") |> map(yaml_front_matter)
+
+row <- map2(fm,path_rel(rep,wd),
+  ~ glue("<tr>
+  <td><a href='/reports/{.y}'>{.x$title}</a></td>
+  <td>{.x$description}</td></tr>")) |>
+  paste0(collapse="")
+
+html <- glue('<table class="table">
+<thead><tr><th>Report</th><th>Description</th></tr></thead>
+<tbody>{row}</tbody></table>')
+htmltools::HTML(html)
+```
