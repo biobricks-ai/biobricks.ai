@@ -1,0 +1,3 @@
+[submodule "themes/hugo-theme-biobricks"]
+	path = themes/hugo-theme-biobricks
+	url = git@github.com:insilica/hugo-theme-biobricks.git

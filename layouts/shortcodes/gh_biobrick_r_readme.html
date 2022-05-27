@@ -1,0 +1,4 @@
+{{ $json := getJSON "https://api.github.com/repos/biobricks-ai/biobricks-R/readme" }}
+{{ $markdown := $json.content | base64Decode }}
+{{ $markdown := trim $markdown "#biobricks\n<!-- badges: start -->\n[![codecov](https://codecov.io/gh/biobricks-ai/biobricks-r/branch/main/graph/badge.svg?token=J041MF0JKG)](https://codecov.io/gh/biobricks-ai/biobricks-r)\n[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)\n<!-- badges: end -->\n"}}
+{{ $markdown | markdownify }}
