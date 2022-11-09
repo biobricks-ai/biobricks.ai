@@ -1,0 +1,11 @@
+[core]
+    remote = biobricks.ai
+['remote "dev"']
+    url = http://localhost:5000
+    custom_auth_header = BBToken
+    password = 8dxRZmQFbQ1QuIcg6u9fdw
+    auth = custom
+['remote "biobricks.ai"']
+    url = https://ins-dvc.s3.amazonaws.com/insdvc
+['remote "s3.biobricks.ai"']
+    url = s3://ins-dvc/insdvc

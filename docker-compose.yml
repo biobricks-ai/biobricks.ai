@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  
+  bbportal:
+    build: .
+    environment: [ env_path=.env.test ]
+    image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:bbportal
+    entrypoint: python src/main.py bbportal
+    env_file: [ "${ENV}:-.env" ]
+    ports: [ "5000:5000" ]
+
+  dvcportal:
+    build: .
+    environment: [ env_path=.env.test ]
+    image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:dvcportal
+    entrypoint: python src/main.py bbportal
+    env_file: [ "${ENV}:-.env" ]
+    ports: [ "5001:5000" ]
