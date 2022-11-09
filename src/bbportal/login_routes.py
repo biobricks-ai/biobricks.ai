@@ -36,7 +36,7 @@ def verification(token):
 # USER PASSWORD RESET ===================================================================================
 def send_password_reset(email):
   link = generate_validation_link(User.get_user(email))
-  route = flask.url_for("reset_password",link,_external=True)
+  route = flask.url_for("reset_password",token=link,_external=True)
   msg = f"Reset your password at this <a href='{route}'>link</a>"
   BBSendgrid.send(email,"Biobricks.ai Password Reset",msg)
 
