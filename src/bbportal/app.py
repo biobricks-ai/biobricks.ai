@@ -1,6 +1,6 @@
 from bbportal import login_manager as LM
-from bbportal import login
-from bbportal.stripe import BBStripe
+from bbportal import login_routes as login
+from bbportal.external_services.stripe import BBStripe
 
 import werkzeug.middleware.proxy_fix as middleware
 import flask

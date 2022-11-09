@@ -1,5 +1,5 @@
 import datastore.datastore as ds
-from bbportal.stripe import BBStripe
+from bbportal.external_services.stripe import BBStripe
 
 import secrets
 import flask_login

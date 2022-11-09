@@ -3,16 +3,14 @@ services:
   
   bbportal:
     build: .
-    environment: [ env_path=.env.test ]
-    image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:bbportal
+    image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
     entrypoint: python src/main.py bbportal
-    env_file: [ "${ENV}:-.env" ]
+    env_file: [ "${ENV:-env_prod.env}" ]
     ports: [ "5000:5000" ]
 
   dvcportal:
     build: .
-    environment: [ env_path=.env.test ]
-    image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:dvcportal
-    entrypoint: python src/main.py bbportal
-    env_file: [ "${ENV}:-.env" ]
+    image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
+    entrypoint: python src/main.py dvcportal
+    env_file: [ "${ENV:-env_prod.env}" ]
     ports: [ "5001:5000" ]

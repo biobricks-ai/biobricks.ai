@@ -1,6 +1,6 @@
 from datastore.user import User
 from bbportal.forms.registration_form import RegistrationForm, ForgotPasswordForm, UpdatePasswordForm
-from bbportal.sendgrid import BBSendgrid
+from bbportal.external_services.sendgrid import BBSendgrid
 
 import datastore.datastore as ds
 
