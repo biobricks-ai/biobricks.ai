@@ -2,19 +2,19 @@
 
 export $(echo $(cat env_test.env | sed 's/#.*//g'| xargs) | envsubst)
 
-python3 src/main.py bbportal &
+python3 src/main.py $1 &
 pid=$!
 
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
 # SELECTED_WID=$(($(xwininfo | grep "Window id" | cut -d " " -f 4)))
 
-inotifywait -q -m -e close_write ./src/bbportal/templates |
+inotifywait -q -m -e close_write ./src/ |
 while read -r filename event; do
   
   echo killing $pid
   kill $pid
-  python3 src/main.py bbportal &
+  python3 src/main.py dvcportal &
   pid=$!
   echo $pid
 
