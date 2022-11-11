@@ -3,6 +3,8 @@ python-dotenv==0.21.0
 stripe==4.2.0
 flask-login
 flask_wtf
+flask_oauthlib
+flask_sqlalchemy
 sendgrid
 boto
 coverage

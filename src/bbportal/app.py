@@ -14,17 +14,16 @@ app.wsgi_app = middleware.ProxyFix(app.wsgi_app)
 
 LM.init(app)
 
+# INDEX =======================================================================================================
 @app.route('/', methods=['GET'])
 def index():
   if flask_login.current_user.is_authenticated:
-    print(f'user {flask_login.current_user} is logged in')
     return flask.render_template('index.html')
   else:
-    print('user is not logged in')
     return flask.redirect('login')
   
 
-# Login and Registration
+# Login and Registration =======================================================================================
 app.route('/register', methods=['GET','POST'])(login.register)
 app.route('/verification/<token>', methods=['GET','POST'])(login.verification)
 app.route('/login', methods=['GET','POST'])(login.login)
@@ -33,6 +32,7 @@ app.route('/logout', methods=['GET'])(login.logout)
 app.route('/forgot_password', methods=['GET','POST'])(login.forgot_password)
 app.route('/reset_password/<token>', methods=['GET','POST'])(login.reset_password)
 
+# STRIPE =======================================================================================================
 @app.route('/customer_portal', methods=['GET'])
 @flask_login.login_required
 def customer_portal():
@@ -48,6 +48,7 @@ def create_checkout_session():
   session = BBStripe.create_checkout_session(customer_id,success,cancel)
   return flask.redirect(session.url, code=303)
 
+# TOKEN =======================================================================================================
 @app.route('/token', methods=['GET'])
 @flask_login.login_required
 def token():
