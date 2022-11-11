@@ -1,0 +1,29 @@
+server {
+  server_name dvc.biobricks.ai;
+
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/dvc.biobricks.ai;
+	return 301 https://dvc.biobricks.ai$request_uri;
+}
+
+server {
+  server_name dvc.biobricks.ai;
+   
+  listen 443 ssl;
+  listen [::]:443;
+  root /var/www/dvc.biobricks.ai;
+ 
+  location / {
+ 		proxy_pass  http://0.0.0.0:5001;
+ 		proxy_set_header Host $host;
+ 		proxy_set_header X-Real-IP $remote_addr;
+ 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ 	}
+ 
+  # ssl configuration;
+  # created with cerbot, use `sudo certbot renew --dry-run` to renew
+  ssl_certificate /etc/letsencrypt/live/dvc.biobricks.ai/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/dvc.biobricks.ai/privkey.pem;
+}
