@@ -53,6 +53,11 @@ class User(flask_login.UserMixin):
     return User.from_row(res) if res is not None else None
 
   @staticmethod
+  def get_token_user(token):
+    row = ds.find('SELECT * FROM user WHERE token = (?)',(token,))
+    return None if row is None else User.from_row(row)
+
+  @staticmethod
   def create_stripe_customer(email):
     return BBStripe.create_customer(email)
   
