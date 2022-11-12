@@ -6,6 +6,7 @@
     password = 8dxRZmQFbQ1QuIcg6u9fdw
     auth = custom
 ['remote "biobricks.ai"']
-    url = https://ins-dvc.s3.amazonaws.com/insdvc
-['remote "s3.biobricks.ai"']
-    url = s3://ins-dvc/insdvc
+    url = https://dvc.biobricks.ai
+    custom_auth_header = BBToken
+    password = 8dxRZmQFbQ1QuIcg6u9fdw
+    auth = custom
