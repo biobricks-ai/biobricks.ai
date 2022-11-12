@@ -1,7 +1,8 @@
 import flask
-import sqlite3
-import boto
+import os 
 import json
+
+from boto.s3.connection import S3Connection
 
 import datastore.datastore as ds
 import datastore.user_event as user_event
@@ -14,7 +15,7 @@ def authorized(token):
   return User.get_token_user(token) is not None
 
 def resource_size(path):
-  s3 = boto.connect_s3()
+  s3 = S3Connection(os.environ['AWS_ACCESS_KEY_INSDVC'], os.environ['AWS_SECRET_KEY_INSDVC'])
   bk = s3.get_bucket('ins-dvc')
   lk = bk.lookup(f"insdvc/{path}")
   s3.close()
