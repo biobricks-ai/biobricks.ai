@@ -56,7 +56,8 @@ def token():
   token = flask_login.current_user.token
   return f"your token is below. please do not share it with anyone <br><b>{token}</b>"
 
-@app.route('/token/is_valid?token=<token>', methods=['GET'])
-def validate_token(token):
+@app.route('/token/is_valid', methods=['GET'])
+def validate_token():
+  token = flask.request.args.get('token')
   token_exists = ds.find('SELECT token from user WHERE token=(?)',(token,))
   return json.dumps(token_exists is not None)
