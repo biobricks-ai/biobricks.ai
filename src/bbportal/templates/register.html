@@ -1,5 +1,12 @@
-<form method="POST" action="/register">
-  <div>{{ form.email.label }}: {{ form.email(class="css_class") }}</div>
-  <div>{{ form.password.label }}: {{ form.password() }}</div>
-  <input type="submit">	
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="pb-3 pt-2">
+register
+<form action='/register' method='POST'>
+  <input type='text' name='email' id='email' placeholder='email'/><br>
+  <input type='password' name='password' id='password' placeholder='password'/><br>
+  <input type='submit' name='submit'/>
 </form>
+</div>
+{% endblock %}

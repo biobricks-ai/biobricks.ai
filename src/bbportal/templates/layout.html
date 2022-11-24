@@ -21,28 +21,32 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Biobricks.ai</a>
         
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               </form>
             </li>
-          </ul>
+          </ul> -->
 
           <ul class="navbar-nav ml-auto pe-5 dropstart">
+            {% if current_user.is_authenticated %}
             <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi-person-circle"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{{ url_for('token')}}">Token</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('customer_portal') }}">Billing</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a></li>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi-person-circle"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('token')}}">Token</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('customer_portal') }}">Billing</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <li class="px-1"><a href="/login" style="color:rgb(157, 199, 233)">login</a></li>
+            <li class="px-1"><a href="/register" style="color:rgb(157, 199, 233)">register</a></li>
+            {% endif %}
           </ul>
-        </li>
-          </ul>
-
-        
+       
       </div>
     </nav>
 
