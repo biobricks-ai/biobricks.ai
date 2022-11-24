@@ -7,6 +7,3 @@
     auth = custom
 ['remote "biobricks.ai"']
     url = https://dvc.biobricks.ai
-    custom_auth_header = BBToken
-    password = 8dxRZmQFbQ1QuIcg6u9fdw
-    auth = custom

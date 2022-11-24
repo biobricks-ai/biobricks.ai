@@ -20,13 +20,13 @@ def generate_validation_link(user):
   ds.execute('INSERT INTO user_link (uid,link_token,expiration) values (?,?,?)',params)
   return link_token
 
-def validate(user: User):
+def send_user_validate_email(user: User):
   link = generate_validation_link(user)
   route = flask.url_for("verification",token=link,_external=True)
   msg = f"Validate your account at <a href='{route}'><b>here</b></a>"
   BBSendgrid.send(user.email, "Validate your Biobricks.ai account", msg)
 
-def verification(token):
+def validate_user_from_email(token):
   uid = ds.find('SELECT uid from user_link WHERE link_token=(?)',(token,))['uid']
   ds.execute('UPDATE user set email_verified = 1 WHERE uid = (?)',(uid,))
   if User.get(uid) is not None:
@@ -74,7 +74,7 @@ def register():
   
   if flask.request.method == "POST" and not User.user_exists(form.email.data):
     user = User.create_user(form.email.data, form.password.data)
-    validate(user)
+    send_user_validate_email(user)
     return "please check your email for a verification link"
     
   return flask.render_template('register.html', form=form)

@@ -2,10 +2,11 @@ from bbportal import login_manager as LM
 from bbportal import login_routes as login
 from bbportal.external_services.stripe import BBStripe
 
+import datastore.datastore as ds
+
 import werkzeug.middleware.proxy_fix as middleware
-import flask
-import flask_login
-import os
+import flask, flask_login
+import os, json
 
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = os.environ['BBPORTAL_FLASK_SECRET_KEY']
@@ -25,7 +26,7 @@ def index():
 
 # Login and Registration =======================================================================================
 app.route('/register', methods=['GET','POST'])(login.register)
-app.route('/verification/<token>', methods=['GET','POST'])(login.verification)
+app.route('/verification/<token>', methods=['GET','POST'])(login.validate_user_from_email)
 app.route('/login', methods=['GET','POST'])(login.login)
 app.route('/logout', methods=['GET'])(login.logout)
 
@@ -54,3 +55,8 @@ def create_checkout_session():
 def token():
   token = flask_login.current_user.token
   return f"your token is below. please do not share it with anyone <br><b>{token}</b>"
+
+@app.route('/token/is_valid=<token>', methods=['GET'])
+def validate_token(token):
+  token_exists = ds.find('SELECT token from user WHERE token=(?)',(token,))
+  return json.dumps(token_exists is not None)
