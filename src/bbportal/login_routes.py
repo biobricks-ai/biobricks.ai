@@ -82,7 +82,11 @@ def register():
 # USER LOGIN/OUT ==================================================================================
 def login():
 
-  if flask.request.method == "GET": return flask.render_template('login.html')
+  if flask.request.method == "GET" and flask_login.current_user.is_authenticated: 
+    return flask.redirect(flask.url_for('index'))
+  
+  if flask_login.current_user.is_authenticated:      
+    return flask.render_template('login.html')
 
   email = flask.request.form['email']
   passw = flask.request.form['password']
