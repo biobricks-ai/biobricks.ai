@@ -85,7 +85,7 @@ def login():
   if flask.request.method == "GET" and flask_login.current_user.is_authenticated: 
     return flask.redirect(flask.url_for('index'))
   
-  if flask_login.current_user.is_authenticated:      
+  if not flask_login.current_user.is_authenticated:
     return flask.render_template('login.html')
 
   email = flask.request.form['email']

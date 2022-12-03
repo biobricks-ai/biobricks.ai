@@ -1,10 +1,22 @@
 import sqlite3
 import os
 import pathlib
-import dotenv
+from dotenv import load_dotenv, find_dotenv
 
-dbpath = pathlib.Path(dotenv.find_dotenv()).parent / "portal.db"
+dbpath = os.environ.get("SQLITE_PATH")
 
+def initdb():
+  if os.path.exists(dbpath): 
+    print(f"db already exists at {pathlib.Path(dbpath).absolute()}")
+    return None
+  
+  pathlib.Path(dbpath).parent.mkdir(parents=True, exist_ok=True)
+
+  for file in os.listdir("flyway"):
+    with open(os.path.join("flyway", file), 'r') as sql_file:
+      execute(sql_file.read())
+
+  
 def find(query,param = None):
   res = None
   try:
@@ -37,8 +49,3 @@ def execute(query,param=None):
   finally:
     con.close()
     return "done"
-
-def initdb():
-  for file in os.listdir("flyway"):
-    with open(os.path.join("flyway", file), 'r') as sql_file:
-      execute(sql_file.read())

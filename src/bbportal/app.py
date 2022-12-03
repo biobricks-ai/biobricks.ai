@@ -8,6 +8,9 @@ import werkzeug.middleware.proxy_fix as middleware
 import flask, flask_login
 import os, json
 
+print('starting app')
+ds.initdb()
+
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = os.environ['BBPORTAL_FLASK_SECRET_KEY']
 app.config['SERVER_NAME'] = os.environ['BBPORTAL_FLASK_SERVER_NAME']
