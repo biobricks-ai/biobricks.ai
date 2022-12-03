@@ -12,9 +12,11 @@ def initdb():
   
   pathlib.Path(dbpath).parent.mkdir(parents=True, exist_ok=True)
 
-  for file in os.listdir("flyway"):
-    with open(os.path.join("flyway", file), 'r') as sql_file:
-      execute(sql_file.read())
+  # list files in flyway directory alphabetically
+  migrations = sorted(os.listdir("flyway"))
+  for migration in migrations:
+    with open(f"flyway/{migration}") as f:
+      execute(f.read())
 
   
 def find(query,param = None):

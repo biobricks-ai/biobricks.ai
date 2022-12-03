@@ -22,7 +22,7 @@ def generate_validation_link(user):
 
 def send_user_validate_email(user: User):
   link = generate_validation_link(user)
-  route = flask.url_for("verification",token=link,_external=True)
+  route = flask.url_for("validate_user_from_email",token=link,_external=True)
   msg = f"Validate your account at <a href='{route}'><b>here</b></a>"
   BBSendgrid.send(user.email, "Validate your Biobricks.ai account", msg)
 
