@@ -7,6 +7,8 @@ services:
     entrypoint: python src/main.py bbportal
     env_file: [ "${ENV:-env_prod.env}" ]
     ports: [ "5000:5000" ]
+    volumes: 
+      - "data:/data"
 
   dvcportal:
     build: .
@@ -14,3 +16,16 @@ services:
     entrypoint: python src/main.py dvcportal
     env_file: [ "${ENV:-env_prod.env}" ]
     ports: [ "5001:5000" ]
+    volumes: 
+      - "data:/data"
+  
+# create a volume at /data/bbportal named 'data'
+# this volume will be shared between bbportal and dvcportal
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/bbportal
+      o: bind
+      
