@@ -45,8 +45,8 @@ html_theme = 'sphinx_rtd_theme'
 html_context = {
   # 'current_version': os.environ.get('CURRENT_VERSION', 'latest'),
   'display_github': True,
-  'github_user': 'insilica',
-  'github_repo': 'rs-srvc',
+  'github_user': 'biobricks-ai',
+  'github_repo': 'biobricks',
   'github_version': commit_id + '/docs/',
   'versions': versions,
 }

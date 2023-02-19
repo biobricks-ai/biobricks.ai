@@ -1,0 +1,38 @@
+server {
+    if ($host = biobricks.ai) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  server_name biobricks.ai;
+
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/biobricks.ai;
+	return 301 https://biobricks.ai$request_uri;
+
+
+}
+
+server {
+  server_name biobricks.ai;
+  
+  listen 443 ssl;
+  listen [::]:443;
+
+  # ssl configuration;
+  # created with cerbot, use `sudo certbot renew --dry-run` to renew
+  ssl_certificate /etc/letsencrypt/live/biobricks.ai/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/biobricks.ai/privkey.pem; # managed by Certbot
+
+  root /var/www/biobricks.ai;
+
+  location / {
+		proxy_pass  http://0.0.0.0:5000;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	}
+
+}

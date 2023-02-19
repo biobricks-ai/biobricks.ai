@@ -14,32 +14,20 @@ The data model is flexible, and supports managing data with `git <https://git-sc
 
 Install
 ===========
-First, `install git <https://github.com/insilica/srvc-template>`_ and `install dvc <https://dvc.org/doc/install>`_:
+First, `install git <https://github.com/insilica/srvc-template>`_ then :
 
 .. code-block:: console
 
-   $ apt-get install git
-   $ pip install dvc
+   $ pip install biobricks
 
-Then install the python, R, or command line client:  
+BioBricks also has an R package `github.com/biobricks-ai/biobricks-r <https://github.com/biobricks-ai/biobricks-r>`_.
 
-* python `pypi.org/project/biobricks <https://pypi.org/project/biobricks>`_
-* R `github.com/biobricks-ai/biobricks-r <https://github.com/biobricks-ai/biobricks-r>`_
-* command line **COMING SOON**
-
-
-Get a Brick
+Setup
 ===========
+BioBricks works by requesting data with a token from dvc.biobricks.ai and storing it in a local directory:
 
-.. code-block:: console
+1. Get your token at biobricks.ai
 
-   $ apt-get install git
-   $ pip install dvc
-   
-Are you new to SRVC? This is the place to start!
-
-* :doc:`Overview <overview>`
-* :doc:`Reference <ref/index>`
 
 Quickstart
 ==========
