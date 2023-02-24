@@ -41,7 +41,12 @@ html_favicon = 'favicon.ico'
 html_show_copyright = False
 html_show_sphinx = False
 html_static_path = ['_static']
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_book_theme'
+html_favicon = "_static/favicon.ico"
+html_theme_options = {
+    "repository_url": "https://github.com/BBPortal",
+    "use_repository_button": True,
+}
 html_context = {
   # 'current_version': os.environ.get('CURRENT_VERSION', 'latest'),
   'display_github': True,
