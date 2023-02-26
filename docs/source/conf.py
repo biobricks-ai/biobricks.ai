@@ -24,7 +24,10 @@ author = 'Luechtefeld, Jaramillo'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+  'sphinx_rtd_theme',
+  'sphinx.ext.autosectionlabel'
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -32,7 +35,7 @@ exclude_patterns = []
 
 
 # The root toctree document.
-root_doc = "contents"
+root_doc = "index"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -41,11 +44,12 @@ html_favicon = 'favicon.ico'
 html_show_copyright = False
 html_show_sphinx = False
 html_static_path = ['_static']
-html_theme = 'sphinx_book_theme'
+html_theme = 'sphinx_rtd_theme'
 html_favicon = "_static/favicon.ico"
 html_theme_options = {
-    "repository_url": "https://github.com/BBPortal",
-    "use_repository_button": True,
+    # "repository_url": "https://github.com/BBPortal",
+    # "use_repository_button": True,
+    # "show_navbar_depth": 2
 }
 html_context = {
   # 'current_version': os.environ.get('CURRENT_VERSION', 'latest'),

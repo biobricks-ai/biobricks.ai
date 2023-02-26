@@ -1,43 +1,52 @@
-.. BioBricks documentation master file, created by
-   sphinx-quickstart on Fri Feb 17 09:58:24 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+   
+   self
+   1_cli.rst
+   2_pyclient
+   3_rclient
+   4_buildbrick
+   5_howwork
+   6_reference
+
 =====================================
-Get Started
-=====================================
-
-SRVC is an open-source document review system that provides full privacy and control over your data.
-It is versatile, and can be extended with Python, R, or any other language.
-The data model is flexible, and supports managing data with `git <https://git-scm.com/>`_.
-
-.. _index-first-steps:
-
-Install
-===========
-First, `install git <https://github.com/insilica/srvc-template>`_ then :
-
-.. code-block:: console
-
-   $ pip install biobricks
-
-BioBricks also has an R package `github.com/biobricks-ai/biobricks-r <https://github.com/biobricks-ai/biobricks-r>`_.
-
-Setup
-===========
-BioBricks works by requesting data with a token from dvc.biobricks.ai and storing it in a local directory:
-
-1. Get your token at biobricks.ai
-
-
 Quickstart
-==========
-First, :doc:`Install SRVC <installation>`, then clone `srvc-template <https://github.com/insilica/srvc-template>`_  and :
+=====================================
+
+Download public databases in a single line of code. No more learning new APIs, finding download buttons, or building complex ETL pipelines.
+
+Install with pip and then configure with the command line tool:
 
 .. code-block:: console
 
-   $ git clone https://github.com/insilica/sfac.git
-   $ cd srvc-template
-   $ sr flow pubmed-search # Pull "angry bees" from pubmed
-   $ sr flow label # Start labeling interface on port 5005
+   $ pip install biobricks   
+   $ biobricks configure # complete the prompts
+   $ biobricks install clinvar # or any other database
 
-Now you can alter ``sr.yaml`` to modify the pubmed query or begin building your own SRVC projects.
+:code:`biobricks configure` creates a :code:`.biobricks` config file in the home directory with a field for:
+
+   1. :code:`BBLIB` the path to install bricks
+   2. :code:`TOKEN` authenticates biobricks.ai requests.
+
+Skip the token prompt during configuration for a temporary token. For a 
+permanent token, register at `biobricks.ai <https://biobricks.ai>`_ 
+and go to `biobricks.ai/token <https://biobricks.ai/token>`_.
+
+After installing a brick it can be used in the :ref:`python client` or :ref:`R client` by running the respective load commands. In python:
+
+.. code-block:: python
+
+   >>> import biobricks, pandas
+   >>> clinvar = biobricks.load('clinvar')
+   >>> clinvar.var_citations.to_pandas()
+      AlleleID  VariationID rs           nsv    citation_source citation_id
+   0  15041.0          2.0  397704705.0  None   PubMed          25741868
+   1  15041.0          2.0  397704705.0  None   PubMedCentral   4544753
+   ...
+
+Loading the brick returns a namespace that can be autocompleted with names for all of the available assets in the installed brick. Data assets are typically parquet Tables (see the `pyarrow <https://arrow.apache.org/docs/python/index.html>`_ and `R arrow <https://arrow.apache.org/docs/r/>`_ packages). 
+
+A list of available bricks can be found at 
+`github.com/biobricks-ai <https://github.com/biobricks-ai>`_.
+
