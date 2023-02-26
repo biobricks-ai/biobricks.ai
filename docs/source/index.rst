@@ -14,9 +14,7 @@
 Quickstart
 =====================================
 
-Download public databases in a single line of code. No more learning new APIs, finding download buttons, or building complex ETL pipelines.
-
-Install with pip and then configure with the command line tool:
+Download public databases in a single line of code. Install with pip and configure:
 
 .. code-block:: console
 
@@ -24,16 +22,16 @@ Install with pip and then configure with the command line tool:
    $ biobricks configure # complete the prompts
    $ biobricks install clinvar # or any other database
 
-:code:`biobricks configure` creates a :code:`.biobricks` config file in the home directory with a field for:
+:code:`biobricks configure` creates a :code:`.biobricks` config file in the home directory with:
 
-   1. :code:`BBLIB` the path to install bricks
+   1. :code:`BBLIB` the path to install bricks :ref:`ref <bblib>`
    2. :code:`TOKEN` authenticates biobricks.ai requests.
 
 Skip the token prompt during configuration for a temporary token. For a 
 permanent token, register at `biobricks.ai <https://biobricks.ai>`_ 
 and go to `biobricks.ai/token <https://biobricks.ai/token>`_.
 
-After installing a brick it can be used in the :ref:`python client` or :ref:`R client` by running the respective load commands. In python:
+:code:`biobricks install clinvar` stores a copy of the ClinVar brick in :code:`BBLIB`. This brick contains parquet files for each clinvar table. The tables can then be loaded with the :ref:`R Client` and :ref:`Python Client`. In python:
 
 .. code-block:: python
 

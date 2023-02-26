@@ -18,3 +18,7 @@ BBLIB
 The BBLIB is set for a user by running :code:`biobricks configure`. It is 
 a path to a filesystem for storing data assets. It is a good idea to choose a path that has a lot of free space and fast
 read times. A mounted SSD is a good choice. 
+
+TOKEN
+==========
+Biobricks.ai provides a temporary token for testing on install. To receive a permanent token register on biobricks.ai and go to `https://biobricks.ai/token/` to generate a token. Biobricks uses this token to track brick usage, provide support, and generate usage based billing.
