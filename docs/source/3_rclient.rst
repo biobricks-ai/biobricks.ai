@@ -14,7 +14,7 @@ Then install the R client:
 .. code-block:: R
   
   > library(remotes)
-  > install_github("biobricks/biobricks-r",dep=TRUE)
+  > install_github("biobricks-ai/biobricks-r",dep=TRUE)
   > biobricks::bblib() # check biobricks library path
 
 The R client has a dependency on :code:`arrow` which is necessary for loading parquet files. This is why the :code:`dep=True` is set in the :code:`install_github` command. If you already have arrow installed, the dep argument can be removed.
