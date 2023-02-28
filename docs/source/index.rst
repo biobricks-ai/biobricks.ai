@@ -24,8 +24,8 @@ Download public databases in a single line of code. Install with pip and configu
 
 :code:`biobricks configure` creates a :code:`.biobricks` config file in the home directory with:
 
-   1. :code:`BBLIB` the path to install bricks :ref:`ref <bblib>`
-   2. :code:`TOKEN` authenticates biobricks.ai requests.
+   1. :code:`BBLIB` the path to install bricks :ref:`(learn more) <bblib>`
+   2. :code:`TOKEN` authenticates biobricks.ai requests :ref:`(learn more) <token>`.
 
 Skip the token prompt during configuration for a temporary token. For a 
 permanent token, register at `biobricks.ai <https://biobricks.ai>`_ 

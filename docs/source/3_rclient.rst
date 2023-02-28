@@ -2,38 +2,38 @@
 R Client
 ==============
 
-The biobricks R client is nearing completion but is not yet available.
+The R client is a `reticulate <https://rstudio.github.io/reticulate/>`_ wrapper around the python client. To get started, first install and configure biobricks:
 
-.. Biobricks can be used in R after installation with `pip install biobricks`. 
-.. The R client is designed to work along with the biobricks command line tool.
+.. code-block:: console
+  
+  $ pip install biobricks
+  $ biobricks configure
 
-.. Installation
-.. ===============
-.. The R client can be installed from `github.com/biobricks-ai/biobricks-r <https://github.com/biobricks-ai/biobricks-r>`_ with:
+Then install the R client:
 
-.. .. code-block:: R
+.. code-block:: R
+  
+  > library(remotes)
+  > install_github("biobricks/biobricks-r",dep=TRUE)
+  > biobricks::bblib() # check biobricks library path
 
-..     > remotes::install_github("biobricks/biobricks-r")
+The R client has a dependency on :code:`arrow` which is necessary for loading parquet files. This is why the :code:`dep=True` is set in the :code:`install_github` command. If you already have arrow installed, the dep argument can be removed.
 
-.. Install Bricks in R
-.. ====================
-.. Install bricks using the :ref:`command line client`
+On the first usage, the Biobricks R package asks to install miniconda, it uses miniconda to install a copy of the python biobricks package. The biobricks-r functions use the :code:`reticulate` package to call the python biobricks functions.
 
-.. .. code-block:: console
+To install and start using a brick use bbinstall and bbload. The clinvar brick distributes parquet files. This means the arrow package is required to load the brick. 
+The tidyverse package is also recommended for printing the data as tibbles.
 
-..     $ biobricks install clinvar # replace clinvar with the desired brick
+.. code-block:: R
+  
+  > biobricks::bbinstall("clinvar") # install the clinvar brick
+  > cv <- biobricks::bbload("clinvar")
+  > cv$variant_summary |> head() |> dplyr::collect()
+  # A tibble: 6 x 34
+  #   AlleleID Type     Name  GeneID GeneS~1 HGNC_ID ...
+  # *    <dbl> <chr>    <chr>  <dbl> <chr>   <chr>   ...
+  # 1    15041 Indel    NM_0~   9907 AP5Z1   HGNC:2~ ...
+  # 2    15041 Indel    NM_0~   9907 AP5Z1   HGNC:2~ ...
+  # ... 
 
-
-.. Load Data in R
-.. ===============
-.. Loading a :ref:`brickref` returns an R list with 
-.. all of the objects in the brick. The list has autocompletion for 
-.. individual brick assets.
-
-.. Today, most brick assets are Arrow Tables. Soon, some bricks will
-.. distribute hdf5 objects for neural networks.
-
-.. .. code-block:: R
-
-..     > library(biobricks)
-..     > clinvar <- biobricks::brick_load("clinvar")
+The R arrow package and biobricks work really well together, arrow can be used to make analysis of biobricks tables much more efficient, all without pulling data into the R session. Learn more about arrow in R here: https://arrow.apache.org/docs/r/articles/arrow.html
