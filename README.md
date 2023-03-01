@@ -10,12 +10,18 @@ The Biobricks portal is made up of:
 1. Create new virtual environment `python3 -m venv env`
 2. Activate it `source env/bin/activate`
 3. Install dependencies `pip install -r requirements.txt`
-4. Add environment variables `source env_test.env`
-5. Run the application `python src/main.py bbportal`
-6. Go to `localhost:5000` in your browser to see the demo
+4. run `./develop.sh bbportal` or `./develop.sh dvcportal`
 
-### Docker compose
+## How to deploy
 
 ```
-docker compose up
+docker compose build 
+aws ecr get-login --no-include-email --region us-east-1
+docker push 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
+ssh biobricks.ai
+screen -r bbportal
+# stop the process
+docker compose down
+docker compose pull
+docker compose up 
 ```
