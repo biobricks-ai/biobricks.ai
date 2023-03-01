@@ -11,3 +11,6 @@ __pycache__/
 
 #codecov
 .coverage
+
+.ipynb_checkpoints
+*.ipynb

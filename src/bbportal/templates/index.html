@@ -2,38 +2,9 @@
 {% block body %}
 
   <div class="pb-3 pt-2">
-  <h2>Get Started</h2>
-  <form action="/create-checkout-session" method="POST">
-    1. <button type="submit" class="btn-link">Start</button> Your subscription
-  </form>
-  2. <a href="{{ url_for('token')}}">Copy</a> your token.<br>
-  3. Get started with the below code<br>
-  </div>
-
-  <b>Python</b> <code>pip install biobricks</code><br>
-
-<pre style="background-color:#161616;color:#D4D4D4" class="py-2 px-2"><code>import biobricks as bb
-bb.initialize(&lt<b>put your token here</b>&gt)
-tox21 = bb.load('tox21')
-tox21.to_pandas()
-</code><code style="color:#04CE73">
-# SAMPLE_ID        PROTOCOL_NAME  SAMPLE_DATA_TYPE  ...
-# NCGC00255864-01  tox21-ache-p3  ratio             ...
-# NCGC00256074-01  tox21-ache-p3  ratio             ...
-# NCGC00255047-01  tox21-ache-p3  ratio             ...</code></pre>
-
-      <b>R</b> <code>remotes::install_github("biobricks-ai/biobricks-R")</code><br>
-
-<pre style="background-color:#161616;color:#D4D4D4" class="py-2 px-2"><code>biobricks::initialize(&lt<b>put your token here</b>&gt)
-biobricks::install('tox21')
-biobricks::brick_load('tox21')[[1]] |> head() |> collect()
-</code><code style="color:#04CE73">
-# SAMPLE_ID        PROTOCOL_NAME  SAMPLE_DATA_TYPE  ...
-# NCGC00255864-01  tox21-ache-p3  ratio             ...
-# NCGC00256074-01  tox21-ache-p3  ratio             ...</code></pre>
-
-  <b>CLI (coming soon)</b><br>
-  A command line interface with homebrew install based on the python biobricks package is coming soon.<br><br>
-
-  <p>Get more bricks at <a href="https://biobricks.ai/bricks/">biobricks.ai/bricks</a></p>
+  <h2>Welcome to Biobricks.ai</h2>
+  <p>Biobricks is a data-registry, that accelerates the use and distribution of health informatics data.</p>
+  <p>Get your token at <a href="{{ url_for('token')}}">biobricks.ai/token</a><br></p>
+  <p>Start coding with <a href="https://docs.biobricks.ai">docs.biobricks.ai</a><br></p>
+  <p>Find bricks at <a href="https://github.com/biobricks-ai/">github.com/biobricks-ai</a></p>
 {% endblock %}

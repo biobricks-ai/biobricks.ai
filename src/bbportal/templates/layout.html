@@ -23,7 +23,8 @@
 
           <ul class="navbar-nav ml-auto pe-5 dropstart">
             {% if current_user.is_authenticated %}
-            <li class="nav-item dropdown">
+            <li><a href="{{ url_for('logout')}}">Logout</a></li>
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi-person-circle"></i>
               </a>
@@ -31,7 +32,7 @@
                 <li><a class="dropdown-item" href="{{ url_for('token')}}">Token</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('customer_portal') }}">Billing</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a></li>
-              </ul>
+              </ul> -->
             </li>
             {% else %}
             <li class="px-1"><a href="/login" style="color:rgb(157, 199, 233)">login</a></li>

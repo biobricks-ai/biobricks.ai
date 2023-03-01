@@ -9,3 +9,5 @@ sendgrid
 boto
 coverage
 pytest-codecov
+pygwalker==0.1.4.5-alpha.0
+biobricks

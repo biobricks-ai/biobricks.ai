@@ -9,4 +9,23 @@
     font-family: inherit;
     font-size: inherit;
 }
-  
+
+a {
+    color: #d84315; /* Brick red color */
+    text-decoration: none; /* Remove underline */
+    /* border-bottom: 2px solid #d84315; Add brick red underline on hover */
+    /* transition: border-bottom 0.2s; Add animation effect */
+}
+
+a:hover {
+    border-bottom: 2px solid #e65100; /* Darken underline on hover */
+}
+
+/* choose an easy to read font for the whole site */
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333;
+    background-color: #fff;
+}
