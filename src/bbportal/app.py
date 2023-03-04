@@ -64,3 +64,12 @@ def validate_token():
   token = flask.request.args.get('token')
   token_exists = ds.find('SELECT token from user WHERE token=(?)',(token,))
   return json.dumps(token_exists is not None)
+
+# CONSOLE =======================================================================================================
+@app.route('/console', methods=['GET'])
+def console():
+  print(flask.request.args.get("command"))
+  # input_value = flask.request.args.get('input')
+  # Process the input value here and generate a JSON response
+  # response_data = {'message': 'Processed input: ' + input_value}
+  return "hope is an illusion" # flask.jsonify(response_data)

@@ -14,47 +14,151 @@
 
   </head>
   
-  <body>
-   
-    <!-- TOP NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Biobricks.ai</a>
+  <style>
+    ::-webkit-scrollbar {
+      width: 12px;
+      background-color: transparent;
+    }
 
-          <ul class="navbar-nav ml-auto pe-5 dropstart">
-            {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('logout')}}">Logout</a></li>
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi-person-circle"></i>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ url_for('token')}}">Token</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('customer_portal') }}">Billing</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a></li>
-              </ul> -->
-            </li>
-            {% else %}
-            <li class="px-1"><a href="/login" style="color:rgb(157, 199, 233)">login</a></li>
-            <li class="px-1"><a href="/register" style="color:rgb(157, 199, 233)">register</a></li>
-            {% endif %}
-          </ul>
-       
+    ::-webkit-scrollbar-thumb {
+      background-color: #3d030c;
+      border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #d8122f;
+    }
+
+    /* ::-webkit-scrollbar-thumb:active {
+      background-color: #4c8e64;
+    } */
+
+    ::-webkit-scrollbar-corner {
+      background-color: #2E3436;
+    }
+
+  .brick-theme .nav-link {
+    background-color: #3d030c;
+    color: #FFF;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+
+  .brick-theme .nav-link:hover {
+    background-color: #d8122f;
+    color: #FFF;
+    text-decoration: none;
+  }
+
+  .brick-theme .nav-link.active {
+    background-color: #6e0616;
+    color: #FFF;
+  }
+  
+  .console-line {
+    margin: 0;
+  }
+
+  .console-command{
+    background-color: #41040d;
+    width: 100%;
+  }
+
+  </style>
+  <script>
+    
+    function console_append(line){
+      const console = document.getElementById('console');
+      const p = document.createElement('p');
+      p.style.margin = '0';
+      p.innerText = line;
+      console.appendChild(p);
+      console.scrollTop = console.scrollHeight;
+    }
+
+    function sendRequest() {
+      const inputField = document.getElementById('console-input');
+      const inputValue = inputField.value;
+      const url = '/process_input?input=' + encodeURIComponent(inputValue);
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          // Handle the JSON response data here
+        });
+    }
+
+    function handleKeyUp(event) {
+      if (event.key === 'Enter') {
+        const inputField = document.getElementById('console-input');
+        const inputValue = inputField.value;
+        console_append("$ " + inputValue)
+        inputField.value = '';
+        sendRequest();
+      }
+    }
+  </script>
+
+  <body style="margin:0">
+   <main style="display: flex; flex-direction: row; height: 100vh;">
+
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height:100vh">
+      <a href="/" class="d-flex mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <!-- <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg> -->
+        <span class="fs-4">BioBricks.ai</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto brick-theme">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" aria-current="page">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+            Talk to Bricks
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a href="#" class="nav-link" aria-current="page">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+            Brick Dictionary
+          </a>
+        </li> -->
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <ul>
+          <li><a href="{{ url_for('customer_portal') }}">account</a></li>
+          <li><a href="/token">token</a></li>
+          <li><a href="https://docs.biobricks.ai">docs.biobricks.ai</a></li>
+          <li><a href="/logout">logout</a></li>
+        </ul>
       </div>
-    </nav>
+    </div>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+    <div id="repl" style="background-color: #130101; display: flex; 
+      flex-direction: column; flex-grow: 1;
+      height:100%; min-height: 0;">
 
-<div class="container container-xxl my-md-4 bd-layout">
-  <main class="bd-main order-1">
-    {% block body %}{% endblock %}
-  </main>
-</div>
+      <div id = "console-container" style="flex-grow:1; overflow:auto">
+      <div id="console"
+      style="color: rgb(231, 199, 199); display: flex;
+      flex-direction: column; align-items: flex-start; 
+      justify-content: flex-end;
+      padding: 16px; line-height: 1.5;">
+      <div style="font-size: x-large;  font-family: 'Helvetica Neue', sans-serif;">
+        <h1>Welcome to BioBricks.ai</h1>
+        <hr>
+        <p>Ask <b>Research</b> questions</p>
+        <p>
+          Ask research questions.<br>
+          Answers help discover data. <br>
+          Pull that data with <a href="https://docs.biobricks.ai">docs.biobricks.ai</a>.<br>
+          This is a work in progress. Come again soon!
+        </p>
+      </div>
+      <hr>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="static/console.js"></script>
+</body>
