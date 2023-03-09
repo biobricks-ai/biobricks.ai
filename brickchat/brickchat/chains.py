@@ -2,12 +2,9 @@ from langchain import OpenAI, SQLDatabase, SQLDatabaseChain
 from langchain.prompts import PromptTemplate
 from langchain.chains import SQLDatabaseSequentialChain, LLMChain
 from langchain.chains.base import Chain
-
 import os, pandas as pd, numpy as np, re, sqlite3, textwrap
 from typing import Dict, List, Any
-
-# import the Column and Table classes from the model.py file
-from model import Doc, BrickDoc, Table
+from .model import BrickDoc, Table
 
 class SQLRetryChain(Chain):
     "A language model chain that retries on error"
@@ -99,7 +96,7 @@ def SelectTableChain(brick:BrickDoc, max_items:int=3):
     
     P = PromptTemplate(input_variables=["query"],template=T)
 
-    chain = LLMChain(llm=OpenAI(), prompt=P)
+    chain = LLMChain(llm=OpenAI(temperature=0.5), prompt=P)
     idict = {t.name: t for t in brick.tables}
     
     return SelectionChain(chain=chain, idict=idict, max_items=max_items)
@@ -109,17 +106,16 @@ def SelectColumnsChain(table:Table, max_items:int=4):
     
     T = textwrap.dedent(f"""
         A researcher asks "{{query}}"\n\n
-        Choose good reference columns for this query from below:
+        Choose a few good reference columns for this query from below:
         \n\n{table.print_cols()}\n\n 
         Don't print anything other than the column names.
         One column name per line.
         Always include the first column.
-        Never include more than four columns.
         Order columns from most to least relevant.""")
     
     P = PromptTemplate(input_variables=["query"],template=T)
 
-    chain = LLMChain(llm=OpenAI(), prompt=P)
+    chain = LLMChain(llm=OpenAI(temperature=0.5), prompt=P)
     idict = {c.name: c for c in table.columns}
     
     return SelectionChain(chain=chain, idict=idict, max_items=max_items)

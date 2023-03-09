@@ -61,19 +61,19 @@ class Console {
 			this.buffer = this.history[this.historyIndex] || '';
 			this.updateBuffer();
 		} 
-		// else if (event.keyCode === 40) { // Down
-		// 	event.preventDefault();
-		// 	if (this.historyIndex === -1) {
-		// 		this.buffer = '';
-		// 	} else if (this.historyIndex < this.history.length - 1) {
-		// 		this.historyIndex++;
-		// 		this.buffer = this.history[this.historyIndex];
-		// 	} else {
-		// 		this.historyIndex = -1;
-		// 		this.buffer = '';
-		// 	}
-		// 	this.updateBuffer();
-		// } 
+		else if (event.keyCode === 40) { // Down
+			event.preventDefault();
+			if (this.historyIndex === -1) {
+				this.buffer = '';
+			} else if (this.historyIndex < this.history.length - 1) {
+				this.historyIndex++;
+				this.buffer = this.history[this.historyIndex];
+			} else {
+				this.historyIndex = -1;
+				this.buffer = '';
+			}
+			this.updateBuffer();
+		} 
 		else if (event.keyCode === 76 && event.ctrlKey) {
 			event.preventDefault();
 			this.clear();
@@ -85,15 +85,26 @@ class Console {
     this.buffer = this.inputline.value;
 	}
 
-	runCommand(command) {
+	async runCommand(command) {
 		this.inputline.value = ''; // clear inputline
 		this.addLine(`$ ${command}`, 'console-command');
 		const output = this.execute(command)
+		
+		// change color of `console-input` and set text to 'sent request, waiting...'
+		const oldcolor = this.inputline.style.color;
+		const oldvalue = this.inputline.value;
+		this.inputline.style.color = 'yellow';
+		this.inputline.value = 'sent request, waiting...';
+		// stop allowing input
+		this.inputline.disabled = true;
 
     output.then((data) => {
       this.addLine(data);
 		  this.scrollToBottom();
-    }) 
+			this.inputline.style.color = oldcolor
+			this.inputline.value = oldvalue
+			this.inputline.disabled = false;
+    })
 	}
 
 	execute(command) {

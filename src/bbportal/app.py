@@ -66,10 +66,10 @@ def validate_token():
   return json.dumps(token_exists is not None)
 
 # CONSOLE =======================================================================================================
+import brickchat.chat as bc
+chat = bc.BrickChat()
+
 @app.route('/console', methods=['GET'])
 def console():
-  print(flask.request.args.get("command"))
-  # input_value = flask.request.args.get('input')
-  # Process the input value here and generate a JSON response
-  # response_data = {'message': 'Processed input: ' + input_value}
-  return "hope is an illusion" # flask.jsonify(response_data)
+  command = flask.request.args.get("command")
+  return chat.query(command)

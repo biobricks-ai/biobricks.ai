@@ -14,3 +14,6 @@ __pycache__/
 
 .ipynb_checkpoints
 *.ipynb
+
+chembl.db
+chembl_32
