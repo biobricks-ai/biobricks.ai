@@ -25,3 +25,8 @@ docker compose down
 docker compose pull
 docker compose up 
 ```
+
+You also need to set up nginx:
+1. add the nginx/biobricks.ai.conf file to the nginx config directory.
+2. rename the server_name as necessary
+3. install certbot, the certbot nginx plugin, and run `certbot install --cert-name <server_name>`

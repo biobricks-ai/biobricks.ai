@@ -1,4 +1,4 @@
-from .BrickChat import BrickChat
+from .chat import BrickChat
 
 chat = BrickChat()
 

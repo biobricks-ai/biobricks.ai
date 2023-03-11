@@ -146,6 +146,8 @@ class Console {
 		pre.style.padding = '0';
 		pre.style.fontFamily = '"Ubuntu Mono", monospace;';
 		pre.style.fontSize = "1em"
+		pre.style.whiteSpace = 'pre-wrap';
+
 		if(clazz != null)
 			pre.classList.add(clazz);
 		this.add(pre);

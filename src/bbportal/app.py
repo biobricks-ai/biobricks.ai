@@ -13,7 +13,9 @@ ds.initdb()
 
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = os.environ['BBPORTAL_FLASK_SECRET_KEY']
-app.config['SERVER_NAME'] = os.environ['BBPORTAL_FLASK_SERVER_NAME']
+# app.config['SERVER_NAME'] = [os.environ['BBPORTAL_FLASK_SERVER_NAME'],'localhost']
+app.config['SERVER_NAME'] = 'biobricks.ddns.net'
+
 app.wsgi_app = middleware.ProxyFix(app.wsgi_app)
 
 LM.init(app)

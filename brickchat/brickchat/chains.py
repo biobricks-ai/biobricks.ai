@@ -211,7 +211,6 @@ class SQLRetryChain(Chain):
         res.replace("\n\s+", "\n")
         return {"result":res}
 
-
 def SQLChain(tables: List[Table]):
     # This chain should try to run the query
     # If it fails, it should take the error and the query
