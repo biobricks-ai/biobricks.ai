@@ -10,4 +10,7 @@ boto
 coverage
 pytest-codecov
 pygwalker==0.1.4.5-alpha.0
-biobricks
+biobricks>=0.1.53
+langchain
+OpenAI
+faiss-gpu

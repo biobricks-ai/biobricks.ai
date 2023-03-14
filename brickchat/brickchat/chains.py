@@ -127,7 +127,7 @@ def ReplyChain(table:Table):
         template=textwrap.dedent(f"""
         The below is a table description and sample:\n\n
         {{tableref}}\n\n
-        A user we love asks the following question:\n\n
+        A user asks the following question:\n\n
         {{query}}\n\n
         Describe why the given table and columns are a good reference.
         """))

@@ -1,44 +1,37 @@
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
-from langchain.document_loaders import TextLoader
-from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate as PT
 from langchain import OpenAI
-
-import requests, json, pandas
-from . import prompts
-
-loader = TextLoader('../../state_of_the_union.txt')
-documents = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-docs = text_splitter.split_documents(documents)
+import textwrap
 
 embeddings = OpenAIEmbeddings()
+db = FAISS.load_local("brickchat.faiss",embeddings)
+llm = OpenAI()
 
-import biobricks as bb
-
-# list bricks
-def bricklist():
-    """get list of bricks from github.com/biobricks-ai"""
-    url = "https://api.github.com/users/biobricks-ai/repos?per_page=100"
-    r = requests.get(url)
-    j = json.loads(r.text)
-    bricks = [i["name"] for i in j]
-    return bricks
-
-bricks = bricklist()
-
-# build docs for a brick
-def brickdoc(brickref):
-    brick = bb.load(brickref)
-        
-def build_brick_index(brick):
-    """build an index for a brick"""
-    bricks = bricklist()
-    # install bricks
-    for brick in bricks:
-        bb.install(brick)
+def find_tables(query):
+    results = db.similarity_search_with_score(query, 5)
+    results = [x for x in results if len(x[0].metadata) > 0]
     
-    # build index
-    prompt = prompts.docprompt()   
-    docchn = LLMChain(llm=OpenAI(), prompt=prompt)
+    querylength = len(query)
+    if(querylength > 2048):
+        raise Exception(f"query is {querylength} characters, shorten to 2048 characters or less.")
+    
+    prompt = textwrap.dedent(f"""\
+        The below is a table description and sample:\n\n
+        {{tableref}}\n\n
+        A user makes the following query for tables:\n\n
+        {query}\n\n
+        Describe why the given table and columns are a good reference.
+        """)
+    
+    if len(results) == 0:
+        raise Exception("No results found")
+    
+    for res in results:
+        sumlength = 4056 - len(prompt)
+        summ = res[0].metadata['summary'][0:sumlength]
+        prompt = prompt.replace("{tableref}",summ)
+        resp = llm.generate([prompt]).generations[0][0].text
+        yield (res[0].metadata, resp)
+    
+    

@@ -1,66 +1,16 @@
-ACTION_TYPE
-Table storing the distinct list of action types used in the drug_mechanism table, together with a higher-level parent action type.
-	DESCRIPTION:Description of how the action type is used
-	PARENT_TYPE:Higher-level grouping of action types e.g., positive vs negative action
 
-                                                                                                                       description         parent_type
-0  Positively effects the normal functioning of the protein e.g., activation of an enzyme or cleaving a clotting protein precursor  POSITIVE MODULATOR
-1                                           Binds to and activates a receptor, often mimicking the effect of the endogenous ligand  POSITIVE MODULATOR
-2                Binds to a receptor at an allosteric site and prevents activation by a positive allosteric modulator at that site  NEGATIVE MODULATOR
-3                                 Binds to a receptor and prevents activation by an agonist through competing for the binding site  NEGATIVE MODULATOR
-4                           Prevents translation of a complementary mRNA sequence through binding and targeting it for degradation  NEGATIVE MODULATOR
+    DATABASE: bindingdb
+    TABLE: bindingDB1
+    NUM_COLS:193
+    NUM_ROWS:1000000
+    COLUMN DESCRIPTIONS:
+    ['BindingDB Reactant_set_id: int64', 'Ligand SMILES: string', 'Ligand InChI: string', 'Ligand InChI Key: string', 'BindingDB MonomerID: int64', 'BindingDB Ligand Name: string', 'Target Name Assigned by Curator or DataSource: string', 'Target Source Organism According to Curator or DataSource: string', 'Ki (nM): string', 'IC50 (nM): string', 'Kd (nM): string', 'EC50 (nM): string', 'kon (M-1-s-1): double', 'koff (s-1): string', 'pH: double', 'Temp (C): string', 'Curation/DataSource: string', 'Article DOI: string', 'PMID: string', 'PubChem AID: string', 'Patent Number: string', 'Authors: string', 'Institution: string', 'Link to Ligand in BindingDB: string', 'Link to Target in BindingDB: string', 'Link to Ligand-Target Pair in BindingDB: string', 'Ligand HET ID in PDB: string', 'PDB ID(s) for Ligand-Target Complex: string', 'PubChem CID: double', 'PubChem SID: double', 'ChEBI ID of Ligand: double', 'ChEMBL ID of Ligand: string', 'DrugBank ID of Ligand: string', 'IUPHAR_GRAC ID of Ligand: double', 'KEGG ID of Ligand: string', 'ZINC ID of Ligand: string', 'Number of Protein Chains in Target (>1 implies a multichain complex): int64', 'BindingDB Target Chain  Sequence: string', 'PDB ID(s) of Target Chain: string', 'UniProt (SwissProt) Recommended Name of Target Chain: string', 'UniProt (SwissProt) Entry Name of Target Chain: string', 'UniProt (SwissProt) Primary ID of Target Chain: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain: double', 'UniProt (TrEMBL) Submitted Name of Target Chain: double', 'UniProt (TrEMBL) Entry Name of Target Chain: double', 'UniProt (TrEMBL) Primary ID of Target Chain: string', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain: double', 'BindingDB Target Chain  Sequence.1: string', 'PDB ID(s) of Target Chain.1: string', 'UniProt (SwissProt) Recommended Name of Target Chain.1: string', 'UniProt (SwissProt) Entry Name of Target Chain.1: string', 'UniProt (SwissProt) Primary ID of Target Chain.1: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.1: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.1: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.1: double', 'UniProt (TrEMBL) Entry Name of Target Chain.1: double', 'UniProt (TrEMBL) Primary ID of Target Chain.1: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.1: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.1: double', 'BindingDB Target Chain  Sequence.2: string', 'PDB ID(s) of Target Chain.2: string', 'UniProt (SwissProt) Recommended Name of Target Chain.2: string', 'UniProt (SwissProt) Entry Name of Target Chain.2: string', 'UniProt (SwissProt) Primary ID of Target Chain.2: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.2: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.2: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.2: double', 'UniProt (TrEMBL) Entry Name of Target Chain.2: double', 'UniProt (TrEMBL) Primary ID of Target Chain.2: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.2: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.2: double', 'BindingDB Target Chain  Sequence.3: string', 'PDB ID(s) of Target Chain.3: string', 'UniProt (SwissProt) Recommended Name of Target Chain.3: string', 'UniProt (SwissProt) Entry Name of Target Chain.3: string', 'UniProt (SwissProt) Primary ID of Target Chain.3: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.3: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.3: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.3: double', 'UniProt (TrEMBL) Entry Name of Target Chain.3: double', 'UniProt (TrEMBL) Primary ID of Target Chain.3: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.3: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.3: double', 'BindingDB Target Chain  Sequence.4: string', 'PDB ID(s) of Target Chain.4: string', 'UniProt (SwissProt) Recommended Name of Target Chain.4: string', 'UniProt (SwissProt) Entry Name of Target Chain.4: string', 'UniProt (SwissProt) Primary ID of Target Chain.4: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.4: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.4: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.4: double', 'UniProt (TrEMBL) Entry Name of Target Chain.4: double', 'UniProt (TrEMBL) Primary ID of Target Chain.4: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.4: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.4: double', 'BindingDB Target Chain  Sequence.5: string', 'PDB ID(s) of Target Chain.5: string', 'UniProt (SwissProt) Recommended Name of Target Chain.5: string', 'UniProt (SwissProt) Entry Name of Target Chain.5: string', 'UniProt (SwissProt) Primary ID of Target Chain.5: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.5: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.5: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.5: double', 'UniProt (TrEMBL) Entry Name of Target Chain.5: double', 'UniProt (TrEMBL) Primary ID of Target Chain.5: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.5: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.5: double', 'BindingDB Target Chain  Sequence.6: string', 'PDB ID(s) of Target Chain.6: double', 'UniProt (SwissProt) Recommended Name of Target Chain.6: string', 'UniProt (SwissProt) Entry Name of Target Chain.6: string', 'UniProt (SwissProt) Primary ID of Target Chain.6: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.6: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.6: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.6: double', 'UniProt (TrEMBL) Entry Name of Target Chain.6: double', 'UniProt (TrEMBL) Primary ID of Target Chain.6: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.6: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.6: double', 'BindingDB Target Chain  Sequence.7: string', 'PDB ID(s) of Target Chain.7: double', 'UniProt (SwissProt) Recommended Name of Target Chain.7: string', 'UniProt (SwissProt) Entry Name of Target Chain.7: string', 'UniProt (SwissProt) Primary ID of Target Chain.7: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.7: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.7: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.7: double', 'UniProt (TrEMBL) Entry Name of Target Chain.7: double', 'UniProt (TrEMBL) Primary ID of Target Chain.7: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.7: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.7: double', 'BindingDB Target Chain  Sequence.8: string', 'PDB ID(s) of Target Chain.8: double', 'UniProt (SwissProt) Recommended Name of Target Chain.8: string', 'UniProt (SwissProt) Entry Name of Target Chain.8: string', 'UniProt (SwissProt) Primary ID of Target Chain.8: string', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.8: string', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.8: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.8: double', 'UniProt (TrEMBL) Entry Name of Target Chain.8: double', 'UniProt (TrEMBL) Primary ID of Target Chain.8: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.8: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.8: double', 'BindingDB Target Chain  Sequence.9: double', 'PDB ID(s) of Target Chain.9: double', 'UniProt (SwissProt) Recommended Name of Target Chain.9: double', 'UniProt (SwissProt) Entry Name of Target Chain.9: double', 'UniProt (SwissProt) Primary ID of Target Chain.9: double', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.9: double', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.9: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.9: double', 'UniProt (TrEMBL) Entry Name of Target Chain.9: double', 'UniProt (TrEMBL) Primary ID of Target Chain.9: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.9: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.9: double', 'BindingDB Target Chain  Sequence.10: double', 'PDB ID(s) of Target Chain.10: double', 'UniProt (SwissProt) Recommended Name of Target Chain.10: double', 'UniProt (SwissProt) Entry Name of Target Chain.10: double', 'UniProt (SwissProt) Primary ID of Target Chain.10: double', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.10: double', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.10: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.10: double', 'UniProt (TrEMBL) Entry Name of Target Chain.10: double', 'UniProt (TrEMBL) Primary ID of Target Chain.10: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.10: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.10: double', 'BindingDB Target Chain  Sequence.11: double', 'PDB ID(s) of Target Chain.11: double', 'UniProt (SwissProt) Recommended Name of Target Chain.11: double', 'UniProt (SwissProt) Entry Name of Target Chain.11: double', 'UniProt (SwissProt) Primary ID of Target Chain.11: double', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.11: double', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.11: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.11: double', 'UniProt (TrEMBL) Entry Name of Target Chain.11: double', 'UniProt (TrEMBL) Primary ID of Target Chain.11: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.11: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.11: double', 'BindingDB Target Chain  Sequence.12: double', 'PDB ID(s) of Target Chain.12: double', 'UniProt (SwissProt) Recommended Name of Target Chain.12: double', 'UniProt (SwissProt) Entry Name of Target Chain.12: double', 'UniProt (SwissProt) Primary ID of Target Chain.12: double', 'UniProt (SwissProt) Secondary ID(s) of Target Chain.12: double', 'UniProt (SwissProt) Alternative ID(s) of Target Chain.12: double', 'UniProt (TrEMBL) Submitted Name of Target Chain.12: double', 'UniProt (TrEMBL) Entry Name of Target Chain.12: double', 'UniProt (TrEMBL) Primary ID of Target Chain.12: double', 'UniProt (TrEMBL) Secondary ID(s) of Target Chain.12: double', 'UniProt (TrEMBL) Alternative ID(s) of Target Chain.12: double']
+    COLUMN SAMPLE:
+       BindingDB Reactant_set_id  ... UniProt (TrEMBL) Alternative ID(s) of Target Chain.12
+0                          1  ...                                                NaN   
+1                          2  ...                                                NaN   
+2                          3  ...                                                NaN   
+3                          4  ...                                                NaN   
+4                          5  ...                                                NaN   
 
-ACTIVITIES
-Activity 'values' or 'end points'  that are the results of an assay recorded in a scientific document. Each activity is described by a row.
-	MOLREGNO:Foreign key to compounds table (for quick lookup of compound structure - can also link to compounds through compound_records table)
-	ACTIVITY_COMMENT:Previously used to report non-numeric activities i.e. 'Slighty active', 'Not determined'. STANDARD_TEXT_VALUE will be used for this in future, and this will be just for additional comments.
-	DATA_VALIDITY_COMMENT:Comment reflecting whether the values for this activity measurement are likely to be correct - one of 'Manually validated' (checked original paper and value is correct), 'Potential author error' (value looks incorrect but is as reported in the original paper), 'Outside typical range' (value seems too high/low to be correct e.g., negative IC50 value), 'Non standard unit type' (units look incorrect for this activity type).
-	VALUE:Datapoint value as it appears in the original dataset.
-	TEXT_VALUE:Non-numeric value for measurement as in original dataset
-	STANDARD_TEXT_VALUE:Standardized version of non-numeric measurement
-
-   molregno activity_comment data_validity_comment  value text_value standard_text_value
-0    180094             None                  None  100.0       None                None
-1    182268             None                  None    2.5       None                None
-2    182268             None                  None   50.0       None                None
-3    182855             None                  None    9.0       None                None
-4    182855   Not Determined                  None    NaN       None                None
-
-ACTIVITY_PROPERTIES
-Table storing parameters and properties of Activity_IDs in the ACTIVITIES table - can be either independent variables that do not apply to the whole assay (e.g., compounds 'DOSE'), or dependent variables/results that are important in interpreting the activity values (e.g., 'HILL_SLOPE')
-	TYPE:The parameter or property type
-	RELATION:Symbol constraining the value (e.g. >, <, =)
-	VALUE:Numberical value for the parameter or property
-	UNITS:Units of measurement
-	TEXT_VALUE:Non-numerical value of the parameter or property
-
-              type relation  value units          text_value
-0          DATASET     None    NaN  None          Hematology
-1    ACTIVITY_TEST     None    NaN  None  RBC (Erythrocytes)
-2           TISSUE     None    NaN  None               Blood
-3            ROUTE     None    NaN  None              Gavage
-4  SRC_ACTIVITY_ID        =    6.0  None                None
-
-ACTIVITY_SMID
-A join table between ACTIVITY_SUPP_MAP and ACTIVITY_SUPP
-	SMID:FK to SMID in ACTIVITY_SUPP_MAP, and a FK to SMID in ACTIVITY_SUPP
-
-   smid
-0     1
-1     2
-2     3
-3     4
-4     5
-
-ACTIVITY_STDS_LOOKUP
-Table storing details of standardised activity types and units, with permitted value ranges. Used to determine the correct standard_type and standard_units for a range of published types/units.
-	STD_ACT_ID:Primary key.
-	STANDARD_TYPE:The standard_type that other published_types in the activities table have been converted to.
-	DEFINITION:A description/definition of the standard_type.
-
-   std_act_id standard_type                                        definition
-0           1          CC50       Concentration required for 50% cytotoxicity
-1           2          EC50          Effective concentration for 50% activity
-2           3          GI50  Concentration required for 50% growth inhibition
-3           4          IC50         Concentration required for 50% inhibition
-4           5            Ki                               Inhibition constant
+[5 rows x 193 columns]

@@ -23,10 +23,11 @@ LM.init(app)
 # INDEX =======================================================================================================
 @app.route('/', methods=['GET'])
 def index():
-  if flask_login.current_user.is_authenticated:
-    return flask.render_template('index.html')
-  else:
-    return flask.redirect('login')
+  return flask.render_template('index.html')
+  # if flask_login.current_user.is_authenticated:
+    # return flask.render_template('index.html')
+  # else:
+  #   return flask.redirect('login')
   
 
 # Login and Registration =======================================================================================
@@ -68,10 +69,12 @@ def validate_token():
   return json.dumps(token_exists is not None)
 
 # CONSOLE =======================================================================================================
-import brickchat.chat as bc
-chat = bc.BrickChat()
+import brickchat.simdb as simdb
 
 @app.route('/console', methods=['GET'])
 def console():
   command = flask.request.args.get("command")
-  return chat.query(command)
+  res = next(simdb.find_tables(command))
+  summ = res[0]["summary"]
+  llmr = res[1]
+  return f"{summ}\n{llmr}"
