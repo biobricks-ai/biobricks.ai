@@ -37,7 +37,7 @@ and go to `biobricks.ai/token <https://biobricks.ai/token>`_.
 
    >>> import biobricks, pandas
    >>> clinvar = biobricks.load('clinvar')
-   >>> clinvar.var_citations.to_pandas()
+   >>> clinvar.var_citations.read().to_pandas()
       AlleleID  VariationID rs           nsv    citation_source citation_id
    0  15041.0          2.0  397704705.0  None   PubMed          25741868
    1  15041.0          2.0  397704705.0  None   PubMedCentral   4544753
