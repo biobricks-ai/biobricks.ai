@@ -56,6 +56,6 @@ html_context = {
   'display_github': True,
   'github_user': 'biobricks-ai',
   'github_repo': 'bbportal',
-  'github_version': commit_id + '/docs/',
+  'github_version': commit_id + '/docs/source',
   'versions': versions,
 }
