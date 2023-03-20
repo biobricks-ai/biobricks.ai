@@ -55,7 +55,7 @@ html_context = {
   # 'current_version': os.environ.get('CURRENT_VERSION', 'latest'),
   'display_github': True,
   'github_user': 'biobricks-ai',
-  'github_repo': 'biobricks',
+  'github_repo': 'bbportal',
   'github_version': commit_id + '/docs/',
   'versions': versions,
 }
