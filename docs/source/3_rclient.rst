@@ -4,6 +4,8 @@ R Client
 
 The R client is a `reticulate <https://rstudio.github.io/reticulate/>`_ wrapper around the python client. To get started, first install and configure biobricks:
 
+Installation
+============
 .. code-block:: console
   
   $ pip install biobricks
@@ -21,8 +23,9 @@ The R client has a dependency on :code:`arrow` which is necessary for loading pa
 
 On the first usage, the Biobricks R package asks to install miniconda, it uses miniconda to install a copy of the python biobricks package. The biobricks-r functions use the :code:`reticulate` package to call the python biobricks functions.
 
-To install and start using a brick use bbinstall and bbload. The clinvar brick distributes parquet files. This means the arrow package is required to load the brick. 
-The tidyverse package is also recommended for printing the data as tibbles.
+Loading Bricks
+==============
+To install and start using a brick use :code:`bbinstall` and :code:`bbload`. The clinvar brick distributes parquet files. This means the arrow package is required to load the brick. 
 
 .. code-block:: R
   
