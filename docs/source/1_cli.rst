@@ -1,35 +1,37 @@
 ####################
-Command Line Client
+Command Line Interface
 ####################
 
-Installing biobricks adds the biobricks cli to your path. The biobricks 
-cli has global and local commands. 
+The biobricks cli has global and local commands. 
 
 Global
 ======
+Commands like configure, version, install that are not specific to a directory. 
 
-configure
-**************
-Create a .biobricks config file in the home directory. Choose a 
-path, BBLIB, to store your bricks, and choose a token from 
-`biobricks.ai/token <https://biobricks.ai/token>`_.
-Rerun to change the bblib or token.
+When using a command like install, uninstall and assets, you can use a :ref:`brickref` to refer to the asset you want to install.
+
+Run biobricks with no commands for a help message.
 
 .. code-block:: console
 
-  $ biobricks configure
+  $ biobricks
+  Usage: biobricks [OPTIONS] COMMAND [ARGS]...
 
-install
-**************
-Install a brick into the brick library. 
-:ref:`brickref`
+  Options:
+    --help  Show this message and exit.
 
+  GLOBAL: modify global config and installed bricks:
+    configure  configure brick path and token
+    install    Install a data dependency
+    uninstall  Uninstall a data dependency
+    assets     List assets in a data dependency
+    version    Get version and check for updates
 
-.. code-block:: console
-
-  $ biobricks install <brickref>
-
-After installing a brick it can be used in the :ref:`python client` or :ref:`R client` by running the respective load commands.
+  LOCAL: build new bricks and manage their dependencies:
+    init       Initialize a .bb directory for data dependencies
+    add        Import a data dependency
+    pull       install local dependencies
+    status     Show the status of the local brick
 
 Local
 =====
@@ -48,11 +50,7 @@ in the current directory and adding .bb/dependencies.txt
 
 add
 ******************
-Adds a :ref:`brickref` to the dependencies.txt file and creates a 
-symlink to the :ref:`brickref` assets in the .bb directory. 
-
-When brick assets are loaded by the brick, they are loaded from the
-.bb directory.
+Adds a :ref:`brickref` to the dependencies.txt file.
 
 .. code-block:: console
 
