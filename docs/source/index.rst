@@ -21,7 +21,7 @@ To start using biobricks just:
    $ biobricks install clinvar # or any other database
 
 Installing A Brick
-******
+********************
 clinvar is a database of clinically relevant genetic variants. First, install it:
 
 .. code-block:: console
@@ -48,8 +48,8 @@ a namespace with paths to the assets distributed by a named brickref.
 .. code-block:: python
 
    >>> import biobricks, pandas
-   >>> clinvar = biobricks.assets('clinvar')
-   >>> pandas.read_parquet(clinvar.allele_gene_parquet)
+   >>> clinvar = biobricks.assets('clinvar') # a namespace with paths to assets
+   >>> pandas.read_parquet(clinvar.allele_gene_parquet) 
       AlleleID   GeneID   Symbol                                              Name  GenesPerAlleleID ...  
    0  15041.0    9907.0    AP5Z1  adaptor related protein complex 5 subunit zeta 1               1.0
    1  15042.0    9907.0    AP5Z1  adaptor related protein complex 5 subunit zeta 1               1.0
@@ -57,14 +57,16 @@ a namespace with paths to the assets distributed by a named brickref.
 
 **R Example**
 
-To use biobricks in R, first install the command line client (see Quickstart). 
-The R client is only meant to provide the ``bbassets`` function, which returns a list 
-with paths to the assets distributed by a named brickref.
+To use biobricks in R, first install the command line client (see Quickstart), then install 
+the R package from github (see below). The ``bbassets`` function is the main function and it
+returns a named list of assets for a given :ref:`brickref <brickref>`.
 
 .. code-block:: R
 
-   > clinvar = biobricks::bbassets('clinvar')
-   > arrow::open_dataset(clinvar$allele_gene_parquet) |> head() |> dplyr::collect()
+   > install.packages('biobricks')
+   > clinvar <- biobricks::bbassets('clinvar')                   # a named list of assets
+   > arrowds <- arrow::open_dataset(clinvar$allele_gene_parquet) # arrow loads parquet files
+   > arrowds |> head() |> dplyr::collect()
    # A tibble: 6 × 7
    #   AlleleID GeneID Symbol  Name                  GenesPerAlleleID Category Source
    # *    <dbl>  <dbl> <chr>   <chr>                            <dbl> <chr>    <chr> 

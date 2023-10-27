@@ -1,6 +1,6 @@
-####################
+#######################
 Command Line Interface
-####################
+#######################
 
 The biobricks cli has global and local commands. 
 

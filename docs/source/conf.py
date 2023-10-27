@@ -59,3 +59,6 @@ html_context = {
   'github_version': commit_id + '/docs/source/',
   'versions': versions,
 }
+
+# conf.py
+templates_path = ['_templates']
