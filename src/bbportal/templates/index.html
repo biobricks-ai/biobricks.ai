@@ -1,102 +1,65 @@
 {% extends "layout.html" %}
-
 {% block body %}
 <style>
+  .code-block {
+  background-color: #282c34; /* Dark background for contrast */
+  color: #abb2bf; /* Light grey text for readability */
+  padding: 20px; /* Ample padding for spacing */
+  border-radius: 10px; /* Rounded corners */
+  overflow: auto; /* Ensures the block is scrollable if the code is too wide */
+  margin: 20px 0; /* Margin for spacing between elements */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: left;
+}
 
-  .container-fluid {
-    max-width: 1200px; /* Set a max-width to the container */
-    margin: auto; /* Center the container */
-  }
+.code-block pre {
+  margin: 0; /* Removes default <pre> margin */
+}
 
-  .repo {
-    background-color: #1e1e1e; /* Dark background for each repo */
-    color: #ffffff;
-    border-style: solid; /* Remove border */
-    border-radius: 8px; /* Rounded corners */
-    transition: background-color 0.2s; /* Smooth background transition */
-  }
+.code-block code {
+  font-family: 'Source Code Pro', monospace; /* Monospaced font for code */
+  font-size: 16px; /* Slightly larger font for readability */
+  line-height: 1.5; /* Increased line height for readability */
+}
 
-  .repo a {
-    color: #9cdcfe;
-    text-decoration: none;
-  }
+.bash code {
+  color: #98c379; /* Greenish tone for Bash code */
+}
 
-  .repo a:hover {
-    text-decoration: underline; /* Underline on hover */
-  }
+.python code {
+  color: #61afef; /* Blueish tone for Python code */
+}
 
-  .repo-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .updated-on {
-    color: #a9a9a9;
-  }
-
-  .github-link a {
-    color: #a9a9a9;
-    text-decoration: none;
-  }
-
-  .github-link a:hover {
-    color: #3db2a1; /* Slightly different color on hover */
-  }
-
-  .facet {
-    background-color: #1e1e1e; /* Dark background for each facet */
-    color: #ffffff;
-    padding: 0px;
-  }
 </style>
-<div class="container-fluid" style="padding-top: 20px;">
-    <div class="row">
-        <div class="col-md-3" style="border-right: 1px solid #666;">
-            <p class="mb-2">Filter by</p>
-            <hr>
-            <p> data type</p>
-            <div class="list-group">
-                <a href="#" class="facet list-group-item">HDT</a>
-                <a href="#" class="facet list-group-item">Parquet</a>
-                <a href="#" class="facet list-group-item">SQLite</a>
-                <a href="#" class="facet list-group-item">Other</a>
-            </div>
-            <hr>
-            <p> tag </p>
-            <div class="list-group">
-                <a href="#" class="facet list-group-item">Healthy</a>
-                <a href="#" class="facet list-group-item">Unhealthy</a>
-            </div>
-        </div>
+<div class="p-5">
+  <h1>BioBricks.ai</h1>
+  <h3>A package manager for data</h3>
+  <br>
+  <strong>QuickStart</strong><br>
+  <p>To install BioBricks and get the HUGO gene nomenclature brick:</p>
+  <div class="code-block bash tp-0">
+    <pre><code>
+> pipx install biobricks
+> biobricks configure
+> biobricks install hello-brick
+    </code></pre>
+  </div>
+  <p>The asset is now available for import in languages like R and Python. In Python:</p>
+  <div class="code-block python">
+    <pre><code>
+>>> import biobricks as bb, pandas as pd
+>>> hgnc = bb.assets('hgnc')
+>>> pd.read_parquet(hgnc.hgnc_complete_set_parquet).head()
 
-        <!-- Repositories Column -->
-        <div class="col-md-9">
-            <p class="mb-2">Results</p>
-            <div class="list-group">
-                {% for repo in repos %}
-                <div class="repo list-group-item flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1"><a href="/{{repo.owner.login}}/{{ repo.name }}">{{ repo.name }}</a></h5>
-                    </div>
-                    <p class="mb-1">{{ repo.description or 'No description provided.' }}</p>
-                    <div class="repo-footer">
-                        <small class="updated-on">Updated on: {{ repo.updated_at }}</small>
-                        <small class="github-link"><a href="{{ repo.html_url }}">github.com/biobricks-ai/{{repo.name}}</a></small>
-                    </div>
-                    <hr>
-                </div>
-                {% endfor %}
-            </div>
+symbol     name                            ...      
+A1BG       alpha-1-B glycoprotein          ...
+A1BG-AS1   A1BG antisense RNA 1            ...
+A1CF       APOBEC1 complementation factor  ...
+[5 rows x 54 columns]
+    </code></pre>
+  </div>
 
-            <!-- Pagination -->
-            <nav aria-label="Page navigation example" class="mt-4">
-                <ul class="pagination justify-content-center">
-                    <!-- Pagination items -->
-                </ul>
-            </nav>
-        </div>
-    </div>
+Find the docs at <a href="https://docs.biobricks.ai">docs.biobricks.ai</a><br>
 </div>
 
 {% endblock %}

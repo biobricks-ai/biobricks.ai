@@ -1,10 +1,182 @@
 {% extends "layout.html" %}
-{% block body %}
 
-  <div class="pb-3 pt-2">
-  <h2>Welcome to Biobricks.ai</h2>
-  <p>Biobricks is a data-registry that accelerates the use and distribution of health informatics data.</p>
-  <p>Get your token at <a href="{{ url_for('token')}}">biobricks.ai/token</a><br></p>
-  <p>Start coding with <a href="https://docs.biobricks.ai">docs.biobricks.ai</a><br></p>
-  <p>Find bricks at <a href="https://github.com/biobricks-ai/">github.com/biobricks-ai</a></p>
+{% block body %}
+<style>
+
+    .container-fluid {
+    max-width: 1200px; /* Set a max-width to the container */
+    margin: auto; /* Center the container */
+    }
+
+    .repo {
+    background-color: #1e1e1e; /* Dark background for each repo */
+    color: #ffffff;
+    border-style: solid; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.2s; /* Smooth background transition */
+    }
+
+    .repo a {
+    color: #9cdcfe;
+    text-decoration: none;
+    }
+
+
+    .repo a:hover {
+    text-decoration: underline; /* Underline on hover */
+    }
+
+    .repo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .updated-on {
+    color: #a9a9a9;
+    }
+
+    .github-link a {
+    color: #a9a9a9;
+    text-decoration: none;
+    }
+
+    .github-link a:hover {
+    color: #3db2a1; /* Slightly different color on hover */
+    }
+
+    .facet {
+    background-color: #1e1e1e; /* Dark background for each facet */
+    color: #ffffff;
+    padding: 0px;
+    }
+
+    .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    }
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: 0.5rem 0.75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #fff;
+        background-color: #007bff00;
+        border: 0px solid #dee2e6;
+    }
+
+    .page-item.active .page-link {
+        color: #0056b3;
+    }
+
+    .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        cursor: auto;
+        background-color: #007bff00;
+    }
+
+    .page-link:hover {
+        color: #fff;
+        text-decoration: none;
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    /* Add this class to your active page number */
+    .active .page-link {
+        background-color: #333;
+        border-color: #333;
+    }
+
+    /* Customize this as needed */
+    .page-item:first-child .page-link {
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+    }
+
+    .page-item:last-child .page-link {
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+</style>
+<div class="container-fluid" style="padding-top: 20px;">
+    <div class="row">
+        <div class="col-md-2" style="border-right: 1px solid #666;">
+            <p class="mb-2">Filter by</p>
+            <hr>
+            <p> data type</p>
+            <div class="list-group">
+                <a href="#" class="facet list-group-item">HDT</a>
+                <a href="#" class="facet list-group-item">Parquet</a>
+                <a href="#" class="facet list-group-item">SQLite</a>
+                <a href="#" class="facet list-group-item">Other</a>
+            </div>
+            <hr>
+            <p> tag </p>
+            <div class="list-group">
+                <a href="#" class="facet list-group-item">Healthy</a>
+                <a href="#" class="facet list-group-item">Unhealthy</a>
+            </div>
+        </div>
+
+        <!-- Repositories Column -->
+        <div class="col-md-9">
+            <p class="mb-2">{{num_results}} results</p>
+            <div class="list-group">
+                {% if repos %}
+                    {% for repo in repos %}
+                    <div class="repo list-group-item flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><a href="/{{repo.owner.login}}/{{ repo.name }}"><strong>{{ repo.name }}</strong></a></h5>
+                        </div>
+                        <p class="mb-1">{{ repo.description or 'No description provided.' }}</p>
+                        <div class="repo-footer">
+                            <small class="updated-on">updated {{ repo.updated_at }}</small>
+                            <small class="github-link"><a href="{{ repo.html_url }}">github.com/biobricks-ai/{{repo.name}}</a></small>
+                        </div>
+                        <hr>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        No results found. <a href="/search?find_all=True&start=1" class="alert-link">View all repositories</a>.
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Pagination -->
+            {% if num_results > 10 %}
+            <nav aria-label="Page navigation example" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% set total_pages = ((num_results / 10) | round(0, 'ceil')) | int %}
+                    <!-- Previous link -->
+                    <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="/search?query={{ query|urlencode }}&start={{ (current_page - 2) * 10 + 1 }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo; Previous</span>
+                        </a>
+                    </li>
+                    {% for page in range(1, total_pages + 1) %}
+                        {% set start = (page - 1) * 10 + 1 %}
+                        <li class="page-item {% if page == current_page %}active{% endif %}">
+                            <a class="page-link" href="/search?query={{ query|urlencode }}&start={{ start }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                    <!-- Next link -->
+                    <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                        <a class="page-link" href="/search?query={{ query|urlencode }}&start={{ current_page * 10 + 1 }}" aria-label="Next">
+                            <span aria-hidden="true">Next &raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
 {% endblock %}

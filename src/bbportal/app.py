@@ -25,13 +25,22 @@ LM.init(app)
 # INDEX =======================================================================================================
 @app.route('/', methods=['GET'])
 def index():
-  res = repos.find_repos()
-  return flask.render_template('index.html', repos=res)
+  return flask.render_template('index.html')
+
+@app.route('/search', methods=['GET'])  # Change here
+def search():
+    query = flask.request.args.get('query', '')  # Access query parameter
+    find_all = flask.request.args.get('find_all', False)
+    start = int(flask.request.args.get('start', 1))
+    current_page = (start -1)//10+1
+    
+    bricks, num_results = repos.find_repos(query, find_all, start)
+    return flask.render_template('search.html', query=query, current_page=current_page, num_results=num_results, repos=bricks)
 
 # BRICK =======================================================================================================
 @app.route('/<org>/<repo>', methods=['GET'])
 def brick(org, repo):
-  repo = repos.find_repo(org, repo)
+  repo = repos.get_repo(org, repo)
   # pretty print repo
   print(json.dumps(repo, indent=2))
   return flask.render_template('brick.html', repo=repo)

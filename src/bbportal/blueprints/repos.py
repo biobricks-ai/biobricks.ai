@@ -35,7 +35,7 @@ def format_datetime(date_str):
 
 def _cached_repos():
     try:
-        return cache.get("repos")
+        return cache.get("_cached_repos")
     except KeyError:
         pass
     
@@ -47,26 +47,41 @@ def _cached_repos():
         repos.extend(response.json())
         url = response.links.get('next', {}).get('url', None)
     
-    cache.set("repos", repos)
+    cache.set("_cached_repos", repos)
     return repos
     
-def find_repos():
+def _cached_bricks():
     repos = _cached_repos()
+    try:
+        return cache.get("_cached_bricks")
+    except KeyError:
+        pass
     
     bricks = []
     for repo in repos:
         brick = deepcopy(repo)
-        # Store raw update time for internal use and sorting
         brick['updated_rawtime'] = repo['updated_at']
-        # Generate human-readable time on-the-fly for display purposes
         brick['updated_at'] = format_datetime(repo['updated_at'])
         bricks.append(brick)
     
-    # sort by updated_rawtime
     bricks = sorted(bricks, key=lambda x: x['updated_rawtime'], reverse=True)
+    cache.set("_cached_bricks", bricks)
     return bricks
 
-def find_repo(org, repo):
+def find_repos(query, find_all=False, start=1):
+    bricks = _cached_bricks()
+    
+    def is_match(b):
+        if find_all: return True
+        return any(query.lower() in v.lower() for _, v in b.items() if isinstance(v, str))
+    
+    filtered_repos = [r for r in bricks if is_match(r)]    
+    num_results = len(filtered_repos)
+    filtered_repos = sorted(filtered_repos, key=lambda x: x['updated_rawtime'], reverse=True)
+    filtered_repos = filtered_repos[start-1:start+9]
+    return filtered_repos, num_results
+
+def get_repo(org, repo):
     repos = _cached_repos()
     for r in repos:
         if r['name'] == repo and r['owner']['login'] == org:
