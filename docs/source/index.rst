@@ -16,8 +16,8 @@ To start using biobricks just:
 
 .. code-block:: console
 
-   $ pip install biobricks   
-   $ biobricks configure # select a path for your data and get a token
+   $ pipx install biobricks
+   $ biobricks configure # set a path and token
    $ biobricks install clinvar # or any other database
 
 Installing A Brick
@@ -28,7 +28,7 @@ clinvar is a database of clinically relevant genetic variants. First, install it
    
    $ biobricks install clinvar
 
-Each brick distributes a set of assets as filesystem paths (starting at :ref:`BBLIB <bblib>`)
+Each brick has a list of filesystem paths (starting at :ref:`BBLIB <bblib>`)
 
 .. code-block:: console
 
@@ -36,14 +36,13 @@ Each brick distributes a set of assets as filesystem paths (starting at :ref:`BB
    hgvs4variation_parquet: <BBLIB>/brick/hgvs4variation.parquet       
    submission_summary_parquet: <BBLIB>/brick/submission_summary.parquet                                                                                                                                                
 
-Each of the clinvar assets are parquet files, which can be easily accessed
-in python and R:
+The clinvar assets are parquet files, which can be used in python and R:
 
 **Python Example**
 
 To use biobricks in python, first install the command line client (see Quickstart). 
-The python client is only meant to provide the ``assets`` function, which returns 
-a namespace with paths to the assets distributed by a named brickref.
+The ``assets`` function returns a namespace with brick asset paths. 
+This also works well with spark, but pandas and pyarrow work well too.
 
 .. code-block:: python
 

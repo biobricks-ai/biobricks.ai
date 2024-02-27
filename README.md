@@ -5,7 +5,7 @@ The Biobricks portal is made up of:
 1. bbportal: user registration and billing management 
 2. dvcportal: dvc request logging
 
-## How to run
+## How to develop
 
 1. Create new virtual environment `python3 -m venv env`
 2. Activate it `source env/bin/activate`

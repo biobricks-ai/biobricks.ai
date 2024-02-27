@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+    .repo-name-header {
+        padding: 2rem 0;
+        background: #161b22;
+        color: #fff;
+        border-bottom: 1px solid #444c56;
+    }
+
+    .repo-name-header h1 {
+        margin-bottom: 0.3rem;
+    }
+
+    .repo-name-header p {
+        margin-bottom: 0;
+        font-size: 1.2rem;
+    }
+
+    .repo-tabs {
+        background: #0d1117;
+        padding: 0.5rem 0;
+    }
+
+    .repo-tabs a {
+        color: #8b949e;
+        margin-right: 2rem;
+        padding: 0.5rem 0;
+        display: inline-block;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .repo-tabs a:hover,
+    .repo-tabs a.active {
+        color: #58a6ff;
+        border-bottom: 3px solid #58a6ff;
+    }
+
+    .repo-main-content {
+        color: #c9d1d9;
+        padding: 2rem 0;
+    }
+
+    .repo-about {
+        background: #161b22;
+        padding: 1.5rem;
+        border-radius: 6px;
+    }
+
+    .commit-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 2rem;
+    }
+
+    .commit-item {
+        background: #161b22;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 6px;
+    }
+
+    .commit-message {
+        color: #c9d1d9;
+        font-size: 1rem;
+    }
+
+    .commit-author {
+        color: #8b949e;
+        font-size: 0.9rem;
+    }
+</style>
+
+
+<div class="container-fluid" style="margin:0; padding:0">
+    <div class="repo-tabs text-left px-3">
+        <a href="/{{ org }}/{{ repo.name }}" class="active">Objects</a>
+        <a href="/{{ org }}/{{ repo.name }}/issues">Code</a>
+        <a href="/{{ org }}/{{ repo.name }}/pulls">Issues</a>
+        <a href="/{{ org }}/{{ repo.name }}/actions">Dependencies</a>
+    </div>
+
+
+
+<div class="container-fluid text-left pt-3 px-3">
+    <strong>{{ repo.owner.login }} / {{ repo.name }}</strong>
+</div>
+
+<hr>
+
+ <div class="repo-main-content">
+    <div class="container">
+        <div class="repo-about">
+            <h3>About</h3>
+            <p>{{ repo.description }}</p>
+        </div>
+        <ul class="commit-list">
+            {% for commit in repo.commits %}
+            <li class="commit-item">
+                <p class="commit-message"><strong>{{ commit.message }}</strong></p>
+                <p class="commit-author">{{ commit.author_name }} committed {{ commit.date }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}

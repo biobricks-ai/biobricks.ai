@@ -1,10 +1,102 @@
 {% extends "layout.html" %}
-{% block body %}
 
-  <div class="pb-3 pt-2">
-  <h2>Welcome to Biobricks.ai</h2>
-  <p>Biobricks is a data-registry that accelerates the use and distribution of health informatics data.</p>
-  <p>Get your token at <a href="{{ url_for('token')}}">biobricks.ai/token</a><br></p>
-  <p>Start coding with <a href="https://docs.biobricks.ai">docs.biobricks.ai</a><br></p>
-  <p>Find bricks at <a href="https://github.com/biobricks-ai/">github.com/biobricks-ai</a></p>
+{% block body %}
+<style>
+
+  .container-fluid {
+    max-width: 1200px; /* Set a max-width to the container */
+    margin: auto; /* Center the container */
+  }
+
+  .repo {
+    background-color: #1e1e1e; /* Dark background for each repo */
+    color: #ffffff;
+    border-style: solid; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.2s; /* Smooth background transition */
+  }
+
+  .repo a {
+    color: #9cdcfe;
+    text-decoration: none;
+  }
+
+  .repo a:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+
+  .repo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .updated-on {
+    color: #a9a9a9;
+  }
+
+  .github-link a {
+    color: #a9a9a9;
+    text-decoration: none;
+  }
+
+  .github-link a:hover {
+    color: #3db2a1; /* Slightly different color on hover */
+  }
+
+  .facet {
+    background-color: #1e1e1e; /* Dark background for each facet */
+    color: #ffffff;
+    padding: 0px;
+  }
+</style>
+<div class="container-fluid" style="padding-top: 20px;">
+    <div class="row">
+        <div class="col-md-3" style="border-right: 1px solid #666;">
+            <p class="mb-2">Filter by</p>
+            <hr>
+            <p> data type</p>
+            <div class="list-group">
+                <a href="#" class="facet list-group-item">HDT</a>
+                <a href="#" class="facet list-group-item">Parquet</a>
+                <a href="#" class="facet list-group-item">SQLite</a>
+                <a href="#" class="facet list-group-item">Other</a>
+            </div>
+            <hr>
+            <p> tag </p>
+            <div class="list-group">
+                <a href="#" class="facet list-group-item">Healthy</a>
+                <a href="#" class="facet list-group-item">Unhealthy</a>
+            </div>
+        </div>
+
+        <!-- Repositories Column -->
+        <div class="col-md-9">
+            <p class="mb-2">Results</p>
+            <div class="list-group">
+                {% for repo in repos %}
+                <div class="repo list-group-item flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1"><a href="/{{repo.owner.login}}/{{ repo.name }}">{{ repo.name }}</a></h5>
+                    </div>
+                    <p class="mb-1">{{ repo.description or 'No description provided.' }}</p>
+                    <div class="repo-footer">
+                        <small class="updated-on">Updated on: {{ repo.updated_at }}</small>
+                        <small class="github-link"><a href="{{ repo.html_url }}">github.com/biobricks-ai/{{repo.name}}</a></small>
+                    </div>
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- Pagination items -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

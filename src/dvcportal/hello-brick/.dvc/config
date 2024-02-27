@@ -1,9 +1,9 @@
 [core]
     remote = biobricks.ai
 ['remote "dev"']
-    url = http://localhost:5000
+    url = http://localhost:5002
     custom_auth_header = BBToken
-    password = 8dxRZmQFbQ1QuIcg6u9fdw
+    password = fEXHDs_v9969vKO1OO4yBg
     auth = custom
 ['remote "biobricks.ai"']
     url = https://dvc.biobricks.ai

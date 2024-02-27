@@ -1,40 +1,36 @@
 import flask
-import os 
+import os
 import json
 
-from boto.s3.connection import S3Connection
 
 import datastore.datastore as ds
 import datastore.user_event as user_event
-
 from datastore.user import User
+from datastore import s3_store
 
 app = flask.Flask(__name__, template_folder="templates")
 
 def authorized(token):
-  return User.get_token_user(token) is not None
-
-def resource_size(path):
-  s3 = S3Connection(os.environ['AWS_ACCESS_KEY_INSDVC'], os.environ['AWS_SECRET_KEY_INSDVC'])
-  bk = s3.get_bucket('ins-dvc')
-  lk = bk.lookup(f"insdvc/{path}")
-  s3.close()
-  return lk.size
-
+	if token == os.environ.get("BIOBRICKS_TEST_TOKEN"): return True
+	return User.get_token_user(token) is not None
+  
 def log_request(request, path):
-  user = User.get_token_user(request.headers.get('BBToken'))
-  size = resource_size(path)
-  event = json.dumps({"path":path,"units":"bytes","size":size})
-  user_event.create_user_event(user.uid, 'get_object', event)  
+	user = User.get_token_user(request.headers.get('BBToken'))
+	size = s3_store.resource_size(path)
+	event = json.dumps({"path":path,"units":"bytes","size":size})
+	user_event.create_user_event(user.uid, 'get_object', event)  
 
 @app.route('/<path:path>', methods=['GET', 'POST'])
 def all_routes(path):
-  
-  if not authorized(flask.request.headers.get('BBToken')):
-    return flask.Response('invalid token', 401)
+	if not authorized(flask.request.headers.get('BBToken')):
+		return flask.Response('invalid token', 401)
 
-  log_request(flask.request, path)
-  
-  # TODO s3 should actually authenticate on token
-  return flask.redirect(f'https://ins-dvc.s3.amazonaws.com/insdvc/{path}')
+	inspath = f"insdvc/{path}"
+	log_request(flask.request, inspath)
+
+	try:
+		url = s3_store.generate_presigned_url('ins-dvc', inspath)
+		return flask.redirect(url)
+	except Exception as e:
+		return flask.Response('Error generating presigned URL', 500)
   

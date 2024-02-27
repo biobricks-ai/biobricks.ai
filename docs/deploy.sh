@@ -4,7 +4,7 @@
 # A path that includes the * wildcard counts as one path even if it causes CloudFront to invalidate thousands of files.
 
 sphinx-build -b html source build/html
-aws s3 sync build/html s3://biobricks.ai
+aws s3 sync build/html s3://biobricks.ai --profile insilica
 
 # create invalidation request and get id
 did=E1NKAT94ILTVEK
