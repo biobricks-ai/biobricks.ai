@@ -77,34 +77,52 @@
 <div class="container-fluid" style="margin:0; padding:0">
     <div class="repo-tabs text-left px-3">
         <a href="/{{ org }}/{{ repo.name }}" class="active">Objects</a>
-        <a href="/{{ org }}/{{ repo.name }}/issues">Code</a>
-        <a href="/{{ org }}/{{ repo.name }}/pulls">Issues</a>
-        <a href="/{{ org }}/{{ repo.name }}/actions">Dependencies</a>
+        <!-- Additional tabs can be added here if needed -->
     </div>
 
+    <div class="container-fluid text-left pt-3 px-3">
+        <strong>{{ repo.owner.login }} / {{ repo.name }}</strong>
+    </div>
+    <hr>
 
-
-<div class="container-fluid text-left pt-3 px-3">
-    <strong>{{ repo.owner.login }} / {{ repo.name }}</strong>
-</div>
-
-<hr>
-
- <div class="repo-main-content">
     <div class="container">
+        <!-- Updated table with an additional column for 'Number of Files' -->
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Path</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Number of Files</th> <!-- New column for Number of Files -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically populated rows from the Objects instances -->
+                {% for object in objects %}
+                <tr>
+                    <td>{{ object.path }}</td>
+                    <td>{{ object.size }}</td>
+                    <td>{{ object.nfiles }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
         <div class="repo-about">
             <h3>About</h3>
             <p>{{ repo.description }}</p>
         </div>
-        <ul class="commit-list">
-            {% for commit in repo.commits %}
-            <li class="commit-item">
-                <p class="commit-message"><strong>{{ commit.message }}</strong></p>
-                <p class="commit-author">{{ commit.author_name }} committed {{ commit.date }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+
+        <div class="repo-about">
+            <h3>QuickStart</h3>
+            <p>To install BioBricks and get the {{ repo.name }} brick:</p>
+            <div class="code-block px-5" style="background-color: #292C34;">
+                <pre><code>
+> pipx install biobricks
+> biobricks configure
+> biobricks install {{ repo.name }}
+                </code></pre>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}

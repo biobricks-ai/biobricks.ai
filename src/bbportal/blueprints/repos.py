@@ -57,7 +57,14 @@ def _cached_bricks():
     except KeyError:
         pass
     
+    # read excludes from data/exclude_list.txt
+    exclude_list = []
+    with open('src/bbportal/data/exclude_list.txt', 'r') as f:
+        exclude_list = f.read().splitlines()
+
+    print(exclude_list)
     bricks = []
+    repos = [r for r in repos if r['name'] not in exclude_list]
     for repo in repos:
         brick = deepcopy(repo)
         brick['updated_rawtime'] = repo['updated_at']

@@ -9,6 +9,7 @@ import flask, flask_login
 import os, json
 
 from .blueprints import repos
+from .model import repo
 
 print('starting app')
 ds.initdb()
@@ -38,12 +39,11 @@ def search():
     return flask.render_template('search.html', query=query, current_page=current_page, num_results=num_results, repos=bricks)
 
 # BRICK =======================================================================================================
-@app.route('/<org>/<repo>', methods=['GET'])
-def brick(org, repo):
-  repo = repos.get_repo(org, repo)
-  # pretty print repo
-  print(json.dumps(repo, indent=2))
-  return flask.render_template('brick.html', repo=repo)
+@app.route('/<org>/<reponame>', methods=['GET'])
+def brick(org, reponame):
+  thisrepo = repos.get_repo(org, reponame)
+  repo_objects = repo.Objects.from_github(org, reponame)
+  return flask.render_template('brick.html', repo=thisrepo, objects=repo_objects)
 
 # ACCOUNT MANAGEMENT ==========================================================================================
 @app.route('/account', methods=['GET'])

@@ -1,0 +1,14 @@
+biobricks
+biobricks-script-lib
+biobricks-r
+biobricks-issues
+biobricks-clojure
+biobricks-okg-tool
+dvc-shell
+bricktools
+gists
+toxnotebook
+vae
+brick-template
+rs-brick
+brick-builder
