@@ -36,7 +36,12 @@ class Objects():
         dvc_lock = Objects._get_dvc_lock(owner, repo)
         if dvc_lock is None:
             return None  # Handle the case where the dvc.lock file could not be fetched
-
+        
+        # if dvc_lock is a string print the error
+        if isinstance(dvc_lock, str):
+            print(dvc_lock)
+            return None
+        
         objects = []
         stages = [ stage_data for _, stage_data in dvc_lock.get('stages', {}).items()]
         for stage in stages:
@@ -45,7 +50,3 @@ class Objects():
                 obj = Objects(path=out['path'], md5=out.get('md5', ''), size=out.get('size', 0), nfiles=out.get('nfiles', 0))
                 objects.append(obj)
         return objects
-        
-    
-
-Objects.from_github("biobricks-ai", "ice")

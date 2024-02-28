@@ -21,7 +21,7 @@ class SimpleCache:
         else:
             raise KeyError(f"Cache expired for key: {key}")
 
-cache = SimpleCache(timeout=60*60)  # Cache timeout set to 30 seconds
+cache = SimpleCache(timeout=24*60*60)  # Cache timeout set to 24 hours
 
 headers = {
     "Authorization": f"token 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",
