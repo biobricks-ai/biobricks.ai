@@ -6,6 +6,7 @@ flask-login==0.6.3
 flask_wtf==1.2.1
 sendgrid==6.10.0
 humanize==4.9.0
+pandas==2.2.1
 
 flask_oauthlib==0.9.6
 flask_sqlalchemy==3.1.1

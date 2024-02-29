@@ -21,6 +21,15 @@
     text-decoration: none;
     }
 
+    .repo-link {
+        color: #007bff; /* Bootstrap link color */
+        text-decoration: none;
+    }
+
+    .repo-link:hover {
+        text-decoration: underline;
+    }
+
 
     .repo a:hover {
     text-decoration: underline; /* Underline on hover */
@@ -52,9 +61,9 @@
     }
 
     .pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
+        display: flex;
+        list-style: none;
+        padding: 0;
     }
 
     .page-link {
@@ -102,6 +111,21 @@
         border-top-right-radius: 0.25rem;
         border-bottom-right-radius: 0.25rem;
     }
+
+    .badge {
+        display: inline-block;
+        padding: .5em 1em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 2rem; /* pill shape */
+        color: #fff; /* white text */
+        background-color: #076d19;
+    }
+
 </style>
 <div class="container-fluid" style="padding-top: 20px;">
     <div class="row">
@@ -110,17 +134,16 @@
             <hr>
             <p> data type</p>
             <div class="list-group">
-                <a href="#" class="facet list-group-item">HDT</a>
-                <a href="#" class="facet list-group-item">Parquet</a>
-                <a href="#" class="facet list-group-item">SQLite</a>
-                <a href="#" class="facet list-group-item">Other</a>
+                <a href="{{ url_for('search', tags='hdt')}}" class="facet list-group-item">HDT</a>
+                <a href="{{ url_for('search', tags='parquet')}}" class="facet list-group-item">Parquet</a>
+                <a href="{{ url_for('search', tags='sqlite')}}" class="facet list-group-item">SQLite</a>
             </div>
-            <hr>
+            <!-- <hr>
             <p> tag </p>
             <div class="list-group">
-                <a href="#" class="facet list-group-item">Healthy</a>
-                <a href="#" class="facet list-group-item">Unhealthy</a>
-            </div>
+                <a href="{{ url_for('search', tags='healthy')}}" class="facet list-group-item">Healthy</a>
+                <a href="{{ url_for('search', tags='unhealthy')}}" class="facet list-group-item">Unhealthy</a>
+            </div> -->
         </div>
 
         <!-- Repositories Column -->
@@ -131,13 +154,22 @@
                     {% for repo in repos %}
                     <div class="repo list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1"><a href="/{{repo.owner.login}}/{{ repo.name }}"><strong>{{ repo.name }}</strong></a></h5>
+                            <h5 class="mb-1"><a href="/{{ repo.owner }}/{{ repo.name }}" class="repo-link"><strong>{{ repo.name }}</strong></a></h5>
                         </div>
                         <p class="mb-1">{{ repo.description or 'No description provided.' }}</p>
-                        <div class="repo-footer">
-                            <small class="updated-on">updated {{ repo.updated_at }}</small>
-                            <small class="github-link"><a href="{{ repo.html_url }}">github.com/biobricks-ai/{{repo.name}}</a></small>
+                        <div>
+                            {% for tag in repo.tags %}
+                            <!-- Update this line with the class `badge` and `badge-pill` to style the tags like in the image -->
+                            <a href="/search?tags={{ tag }}" class="badge badge-pill badge-info">{{ tag }}</a>
+                            {% endfor %}
                         </div>
+            
+                        <div class="repo-footer">
+                            <small class="updated-on">updated {{ repo.updated_last }}</small>
+                            <!-- Make sure the URL is correct for the GitHub link -->
+                            <small class="github-link"><a href="{{ repo.html_url }}">github.com/biobricks-ai/{{ repo.name }}</a></small>
+                        </div>
+                        
                         <hr>
                     </div>
                     {% endfor %}

@@ -8,8 +8,7 @@ import werkzeug.middleware.proxy_fix as middleware
 import flask, flask_login
 import os, json
 
-from .blueprints import repos
-from .model import repo
+from .model.repo import Repo, Object
 
 print('starting app')
 ds.initdb()
@@ -31,19 +30,23 @@ def index():
 @app.route('/search', methods=['GET'])  # Change here
 def search():
     query = flask.request.args.get('query', '')  # Access query parameter
-    find_all = flask.request.args.get('find_all', False)
+    find_all = flask.request.args.get('find_all', False) if query != '' else True
+    
+    tags = flask.request.args.get('tags', '').split(',')
+    tags = [] if tags == [''] else tags
+    
     start = int(flask.request.args.get('start', 1))
     current_page = (start -1)//10+1
     
-    bricks, num_results = repos.find_repos(query, find_all, start)
-    return flask.render_template('search.html', query=query, current_page=current_page, num_results=num_results, repos=bricks)
+    repodf, num_results = Repo.find_repos(query, find_all, start, tags)
+    return flask.render_template('search.html', query=query, current_page=current_page, num_results=num_results, repos=repodf)
 
 # BRICK =======================================================================================================
 @app.route('/<org>/<reponame>', methods=['GET'])
 def brick(org, reponame):
-  thisrepo = repos.get_repo(org, reponame)
-  repo_objects = repo.Objects.from_github(org, reponame)
-  return flask.render_template('brick.html', repo=thisrepo, objects=repo_objects)
+  repo = Repo.get_repo(org, reponame)
+  objects = Object.get_repo_objects(repo) if repo else []
+  return flask.render_template('brick.html', repo=repo, objects=objects)
 
 # ACCOUNT MANAGEMENT ==========================================================================================
 @app.route('/account', methods=['GET'])

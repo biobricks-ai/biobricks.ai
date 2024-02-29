@@ -81,7 +81,7 @@
     </div>
 
     <div class="container-fluid text-left pt-3 px-3">
-        <strong>{{ repo.owner.login }} / {{ repo.name }}</strong>
+        <strong>{{ repo.owner }} / {{ repo.name }}</strong>
     </div>
     <hr>
 
@@ -100,7 +100,7 @@
                 {% for object in objects %}
                 <tr>
                     <td>{{ object.path }}</td>
-                    <td>{{ object.size }}</td>
+                    <td>{{ object.human_size }}</td>
                     <td>{{ object.nfiles }}</td>
                 </tr>
                 {% endfor %}
