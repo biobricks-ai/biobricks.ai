@@ -82,6 +82,7 @@ class Repo():
             return any(query.lower() in v.lower() for _, v in r.items() if isinstance(v, str))
         
         matches = reposdf.apply(lambda r: is_match(r), axis=1)    
+        n_match = matches.sum()
         matchdf = reposdf[matches]
         matchdf = matchdf.iloc[start-1:start+9]
         
@@ -93,7 +94,7 @@ class Repo():
             matchdf.at[i, 'repo'] = repo
             repos = repos + [repo]
         
-        return repos, matchdf.shape[0]
+        return repos, n_match
     
     @staticmethod
     def From_Dict(d):
