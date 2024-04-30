@@ -64,7 +64,12 @@ app.route('/forgot_password', methods=['GET','POST'])(login.forgot_password)
 app.route('/reset_password/<token>', methods=['GET','POST'])(login.reset_password)
 
 # STRIPE ======================================================================================================
-@app.route('/customer_portal', methods=['GET'])
+@app.route('/pricing', methods=['GET'])
+@LM.login_required
+def pricing():
+  return flask.render_template('pricing.html')
+
+@app.route('/billing', methods=['GET'])
 @LM.login_required
 def customer_portal():
   customer_id = flask_login.current_user.stripe_customer_id

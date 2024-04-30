@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+
+
+</style>
+<div class="p-5">
+    <h1>BioBricks.ai</h1>
+    <h2>Enterprise Plan Enrollment</h2>
+    <br>
+    <p>Unlock exclusive benefits with our <strong>Enterprise Plan</strong>:</p>
+    <ul>
+      <li><strong>Support</strong>: Up to 40 hours of baseline technical and administrative support, with additional support available.</li>
+      <li><strong>Services</strong>: Full access to all BioBricks data and applications.</li>
+      <li><strong>Research</strong>: Dedicated data scientists to assist your team in leveraging BioBricks data assets for research.</li>
+      <li><strong>Development</strong>: Custom development of new bricks or features as per your requirements.</li>
+    </ul>
+    <h3>Activate Your Plan</h3>
+    <p>Follow these simple steps to activate your plan:</p>
+    <ol>
+      <li><b><a href="mailto:info@insilica.co">info@insilica.co</a> - contact us for a personalized consultation.</b></li>
+      <li><b><a href="{{url_for('customer_portal')}}">Customer Portal</a> - set up payment information.</b></li>
+    </ol>
+    <p>Thank you for using BioBricks!</p>
+  </div>
+
+{% endblock %}

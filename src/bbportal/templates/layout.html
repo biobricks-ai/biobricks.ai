@@ -95,12 +95,17 @@
         <li class="nav-item"> <!-- Added nav-item for consistent styling -->
           <a class="nav-link" href="https://docs.biobricks.ai">docs</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('pricing') }}">pricing</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-list"></i> <!-- Hamburger icon -->
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{{ url_for('token') }}">Token</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ url_for('customer_portal') }}">Customer Portal</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
           </ul>
