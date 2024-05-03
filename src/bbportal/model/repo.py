@@ -4,6 +4,7 @@ import humanize
 import sqlite3
 import pandas as pd
 import ast
+import os
 
 class Object():
     
@@ -17,7 +18,7 @@ class Object():
     @staticmethod
     def get_repo_objects(repo):
         objects = []
-        with sqlite3.connect('biobricks.db') as con:
+        with sqlite3.connect(Repo.biobricks_db) as con:
             con.row_factory = sqlite3.Row
             q = """SELECT object.path, object.md5, object.size osize, object.nfiles FROM repo 
             INNER JOIN object ON repo.repo_id = object.repo_id 
@@ -36,6 +37,9 @@ class Object():
     
 class Repo():
     
+    # create a static biobricks.db string for sqlite location
+    biobricks_db = os.environ.get('BIOBRICKS_DB_LOCATION', 'biobricks.db')
+    
     def __init__(self, name, owner, updated_at, updated_last, html_url, size, metajson, tags=[]):
         self.name = name
         self.owner = owner
@@ -50,14 +54,14 @@ class Repo():
         self.tags = self.lookup_tags()
     
     def lookup_tags(self):
-        with sqlite3.connect('biobricks.db') as con:
+        with sqlite3.connect(Repo.biobricks_db) as con:
             q = "SELECT tag.tag FROM tag INNER JOIN repo ON tag.repo_id = repo.repo_id WHERE repo.name = ? AND repo.owner = ?"
             tags = [ x[0] for x in con.execute(q, (self.name, self.owner)).fetchall() if x[0] != '' ]
         return tags
     
     @staticmethod
     def _repos():
-        with sqlite3.connect('biobricks.db') as con:
+        with sqlite3.connect(Repo.biobricks_db) as con:
             q = "SELECT repo.* FROM repo INNER JOIN object ON repo.repo_id = object.repo_id ORDER BY repo.updated_at DESC"
             df = pd.read_sql_query(q, con)
         
@@ -72,7 +76,7 @@ class Repo():
         where = f"WHERE LOWER(tag.tag) IN (?)" if tags else ""
         q = f"SELECT DISTINCT repo.* FROM repo INNER JOIN tag ON repo.repo_id = tag.repo_id {where} ORDER BY repo.updated_at DESC"
         
-        with sqlite3.connect('biobricks.db') as con:
+        with sqlite3.connect(Repo.biobricks_db) as con:
             reposdf = pd.read_sql_query(q, con, params=tags)
             reposdf['updated_at_dt'] = pd.to_datetime(reposdf['updated_at']).dt.tz_convert('UTC')
             reposdf['updated_last'] = reposdf['updated_at_dt'].apply(lambda x: humanize.naturaltime(datetime.now(timezone.utc) - x))
@@ -103,7 +107,7 @@ class Repo():
     
     @staticmethod
     def get_repo(owner, repo_name):
-        with sqlite3.connect('biobricks.db') as con:
+        with sqlite3.connect(Repo.biobricks_db) as con:
             con.row_factory = sqlite3.Row
             cur = con.cursor()
             q = "SELECT DISTINCT repo.* FROM repo INNER JOIN object ON repo.repo_id = object.repo_id WHERE repo.name = ? AND repo.owner = ? ORDER BY repo.updated_at DESC"
