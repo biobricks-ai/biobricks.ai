@@ -53,7 +53,7 @@ def brick(org, reponame):
 @LM.login_required
 def account():
   return flask.render_template('account.html')
-  
+
 # Login and Registration ======================================================================================
 app.route('/register', methods=['GET','POST'])(login.register)
 app.route('/verification/<token>', methods=['GET','POST'])(login.validate_user_from_email)

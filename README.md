@@ -16,7 +16,7 @@ The Biobricks portal is made up of:
 
 ```
 docker compose build 
-aws ecr get-login --no-include-email --region us-east-1 --profile insilica | docker login --username AWS --password-stdin 951523641836.dkr.ecr.us-east-1.amazonaws.com
+aws ecr get-login --no-include-email --region us-east-1 --profile <your_insilica_profile> | docker login --username AWS --password-stdin 951523641836.dkr.ecr.us-east-1.amazonaws.com
 docker push 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
 ssh biobricks.ai
 screen -r bbportal

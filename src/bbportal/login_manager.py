@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import redirect, url_for
+from flask import redirect, url_for, request, session
 from datastore.user import User
 import flask_login
 import flask
@@ -24,6 +24,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not flask_login.current_user.is_authenticated:
-            return flask.redirect('login')
+            session['next'] = request.url
+            return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function

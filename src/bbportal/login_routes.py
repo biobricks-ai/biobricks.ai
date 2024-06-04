@@ -81,23 +81,28 @@ def register():
 
 # USER LOGIN/OUT ==================================================================================
 def login():
+    if flask.request.method == "GET":
+        if flask_login.current_user.is_authenticated:
+            return flask.redirect(flask.url_for('index'))
+        return flask.render_template('login.html')
 
-  if flask.request.method == "GET" and flask_login.current_user.is_authenticated: 
-    return flask.redirect(flask.url_for('index'))
-  
-  if not flask_login.current_user.is_authenticated:
-    return flask.render_template('login.html')
+    if flask.request.method == "POST":
+        email = flask.request.form['email']
+        passw = flask.request.form['password']
+        user = User.get_user(email)
 
-  email = flask.request.form['email']
-  passw = flask.request.form['password']
-  user  = User.get_user(email)
+        if not User.user_exists(email) or not user.validate_password(passw):
+            flask.flash("incorrect email or password", category="error")
+            return flask.redirect(flask.url_for('login'))
 
-  if not User.user_exists(email) or not user.validate_password(passw):
-    flask.flash("incorrect email or password",category="error")
-    return flask.redirect(flask.url_for('login'))
+        flask_login.login_user(user)
 
-  flask_login.login_user(user)
-  return flask.redirect(flask.url_for('index'))
+        # Check if there is a 'next' URL in the session and redirect to it
+        next_page = flask.session.pop('next', None)
+        if next_page:
+            return flask.redirect(next_page)
+
+        return flask.redirect(flask.url_for('index'))
 
 def logout():
   flask_login.logout_user()
