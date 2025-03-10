@@ -10,7 +10,8 @@ The Biobricks portal is made up of:
 1. Create new virtual environment `python3 -m venv env`
 2. Activate it `source env/bin/activate`
 3. Install dependencies `pip install -r requirements.txt`
-4. run `./develop.sh bbportal` or `./develop.sh dvcportal`
+4. Set up environment variables `source set-env.sh`
+5. run `./develop.sh bbportal` or `./develop.sh dvcportal`
 
 ## How to deploy
 

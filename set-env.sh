@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# configure the biobricks.ai profile, ask an admin for the start-url and sso-region
+# aws configure sso --profile biobricks.ai
+# export AWS_PROFILE=biobricks.ai
+aws sso login --profile biobricks.ai
+export AWS_PROFILE=biobricks.ai
+
 # Get the secret and set as environment variables
 SECRET=$(aws secretsmanager get-secret-value \
     --secret-id "github.com/biobricks/biobricks.ai" \
