@@ -1,7 +1,6 @@
 import sqlite3
 import os
 import pathlib
-from dotenv import load_dotenv, find_dotenv
 
 dbpath = os.environ.get("SQLITE_PATH")
 

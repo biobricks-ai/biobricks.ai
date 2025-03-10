@@ -1,6 +1,7 @@
 from datastore.user import User
 from bbportal.forms.registration_form import RegistrationForm, ForgotPasswordForm, UpdatePasswordForm
 from bbportal.external_services.sendgrid import BBSendgrid
+from werkzeug.security import generate_password_hash, check_password_hash
 
 import datastore.datastore as ds
 
@@ -35,19 +36,35 @@ def validate_user_from_email(token):
 
 # USER PASSWORD RESET ===================================================================================
 def send_password_reset(email):
-  link = generate_validation_link(User.get_user(email))
-  route = flask.url_for("reset_password",token=link,_external=True)
-  msg = f"Reset your password at this <a href='{route}'>link</a>"
-  BBSendgrid.send(email,"Biobricks.ai Password Reset",msg)
+    user = User.get_user(email)
+    if not user:
+        return False
+    
+    link = generate_validation_link(user)
+    route = flask.url_for("reset_password", token=link, _external=True)
+    msg = f"Reset your password at <b><a href='{route}'>biobricks.ai forgot password</a></b>"
+    BBSendgrid.send(email, "Biobricks.ai Password Reset", msg)
+    return True
 
 def forgot_password():
-  form = ForgotPasswordForm()
-  if flask.request.method == "GET": 
+    form = ForgotPasswordForm()
+    
+    if flask.request.method == "GET": 
+        return flask.render_template('forgot_password.html', form=form)
+    
+    if form.validate_on_submit():
+        email = form.email.data
+        user = User.get_user(email)
+        
+        if user:
+            send_password_reset(email)
+            return "Check your email for a reset link"
+        else:
+            flask.flash("Email not found", "error")
+            return flask.redirect(flask.url_for('forgot_password'))
+    
+    # If form validation failed
     return flask.render_template('forgot_password.html', form=form)
-  
-  email = flask.request.form['email']
-  send_password_reset(email)
-  return "check your email for a reset link"
 
 def reset_password(token):
   form = UpdatePasswordForm()
@@ -55,14 +72,17 @@ def reset_password(token):
   if flask.request.method == "GET": 
     return flask.render_template('reset_password.html', form=form, token=token)
   
-  passw = flask.request.form['password']
-  uid = ds.find('SELECT uid from user_link WHERE link_token=(?)',(token,))['uid']
-  ds.execute('UPDATE user set password = (?) WHERE uid = (?)',(passw,uid,))
+  if form.validate_on_submit():
+    uid = ds.find('SELECT uid from user_link WHERE link_token=(?)',(token,))['uid']
+    user = User.get(uid)
+    if user:
+      hashpw = generate_password_hash(form.password.data)
+      ds.execute('UPDATE user set hashpw = (?) WHERE uid = (?)', (hashpw, uid))
+      flask_login.login_user(user)
+      return flask.redirect('/')
   
-  if User.get(uid) is not None:
-    flask_login.login_user(User.get(uid))
-
-  return flask.redirect('/')
+  # If validation fails, return to form
+  return flask.render_template('reset_password.html', form=form, token=token)
 
 # USER Registration =====================================================================================
 def register():
