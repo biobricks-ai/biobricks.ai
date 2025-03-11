@@ -4,18 +4,24 @@ services:
   bbportal:
     build: .
     image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
-    entrypoint: python src/main.py bbportal
+    entrypoint: >
+      bash -c "PYTHONPATH=/app/src 
+      gunicorn -b 0.0.0.0:5002 -w 4 -k gthread -t 300 
+      'src.bbportal.app:create_app()'"
     env_file: [ "${ENV:-env_prod.env}" ]
-    ports: [ "5000:5000" ]
+    ports: [ "5002:5002" ]
     volumes: 
       - "data:/data"
 
   dvcportal:
     build: .
     image: 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
-    entrypoint: python src/main.py dvcportal
+    entrypoint: >
+      bash -c "PYTHONPATH=/app/src 
+      gunicorn -b 0.0.0.0:5001 -w 4 -k gthread -t 300 
+      'src.dvcportal.app:create_app()'"
     env_file: [ "${ENV:-env_prod.env}" ]
-    ports: [ "5001:5000" ]
+    ports: [ "5001:5001" ]
     volumes: 
       - "data:/data"
   
