@@ -17,8 +17,19 @@ The Biobricks portal is made up of:
 
 ```
 docker compose build 
-aws ecr get-login --no-include-email --region us-east-1 --profile <your_insilica_profile> | docker login --username AWS --password-stdin 951523641836.dkr.ecr.us-east-1.amazonaws.com
+aws ecr get-login-password --region us-east-1 --profile iam_tom | docker login --username AWS --password -stdin 951523641836.dkr.ecr.us-east-1.amazonaws.com
+COMMIT=$(git rev-parse HEAD)
+# update the image tag in docker-compose.yml
+sed -i "s/bbportal:<commit>/bbportal:$COMMIT/g" docker-compose.yml
+docker compose build
+docker push 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:$COMMIT
+
+# change the image tag back to latest reference
+sed -i "s/bbportal:$COMMIT/bbportal:latest/g" docker-compose.yml
+docker compose build
 docker push 951523641836.dkr.ecr.us-east-1.amazonaws.com/bbportal:latest
+
+# login and start the new process
 ssh biobricks.ai
 screen -r bbportal
 # stop the process
